@@ -10,7 +10,7 @@ import time
 bus = smbus.SMBus(1)
 
 # This is the address we setup in the Arduino Program
-address = 0x04
+address = 0x09
 
 def writeNumber(value):
     bus.write_byte(address, value)
