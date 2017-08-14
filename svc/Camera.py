@@ -20,10 +20,10 @@ class WebCam():
             os.makedirs(FOLDER_WEBCAM)
         print "Usando camara %s ..." % CAMERA_DEVICE
         fileTime = strftime("%Y-%m-%d_%H:%M:%S", localtime())
-        log.info(fileTime)
+        #log.info(fileTime)
         fileName = '%spic_%s.jpg'%(FOLDER_WEBCAM, fileTime)    
-        log.info(fileName)
-        commandCamera = 'fswebcam -d %s -r %dx%d %s -S2 --set brightness=65%' % (CAMERA_DEVICE, PIC_WIDTH, PIC_HEIGHT, fileName)
+        #log.info(fileName)
+        commandCamera = 'fswebcam -d %s -r %dx%d %s -S2 --set brightness=65' % (CAMERA_DEVICE, PIC_WIDTH, PIC_HEIGHT, fileName)
         log.debug(commandCamera)
-        #os.system('fswebcam -d %s -r %dx%d %s -S2 --set brightness=65%' % (CAMERA_DEVICE, PIC_WIDTH, PIC_HEIGHT, fileName))  
+        os.system(commandCamera)  
         
