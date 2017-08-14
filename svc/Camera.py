@@ -23,5 +23,7 @@ class WebCam():
         log.info(fileTime)
         fileName = '%spic_%s.jpg'%(FOLDER_WEBCAM, fileTime)    
         log.info(fileName)
-        os.system('fswebcam -d %s -r %dx%d %s -S2 --set brightness=65%' % (CAMERA_DEVICE, PIC_WIDTH, PIC_HEIGHT, fileName))  
+        commandCamera = 'fswebcam -d %s -r %dx%d %s -S2 --set brightness=65%' % (CAMERA_DEVICE, PIC_WIDTH, PIC_HEIGHT, fileName)
+        log.debug(commandCamera)
+        #os.system('fswebcam -d %s -r %dx%d %s -S2 --set brightness=65%' % (CAMERA_DEVICE, PIC_WIDTH, PIC_HEIGHT, fileName))  
         
