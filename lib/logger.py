@@ -23,5 +23,3 @@ logHandler.setFormatter(logFormatter)
 
 # add handler to logger
 logger.addHandler(logHandler)
-
-logger.info("Init loggin pyfarm")
