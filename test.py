@@ -26,14 +26,18 @@ def sendI2CCommand(cmd):
         if (len(cmd) > MAX_I2C_CONTENT) :
             totalParts = 2;
         cmd1 = cmd[:MAX_I2C_CONTENT]
+        print cmd1
         cmd1 = buildI2Cpackage(cmd1, totalParts, 1)
+        print cmd1
         messageInBytes = StringToBytes(cmd1)
         bus.write_i2c_block_data(LCD_ADDR, 0, messageInBytes)
 
         if (totalParts > 1) :
             toEnd = -1*MAX_I2C_CONTENT
             cmd2 = cmd[toEnd:]
+            print cmd2
             cmd2 = buildI2Cpackage(cmd2, totalParts, 2)
+            print cmd2
             messageInBytes = StringToBytes(cmd2)
             bus.write_i2c_block_data(LCD_ADDR, 0, messageInBytes)
         
