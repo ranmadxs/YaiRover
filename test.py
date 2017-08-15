@@ -1,12 +1,19 @@
 #!/usr/bin/python
 
 import smbus
+import time
 
-bus = smbus.SMBus(0)    # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
+LCD_ADDR = 0x28
 
-DEVICE_ADDRESS = 0x09      #7 bit address (will be left shifted to add the read write bit)
-DEVICE_REG_MODE1 = 0x00
-DEVICE_REG_LEDOUT0 = 0x1d
+def StringToBytes(val):
+        retVal = []
+        for c in val:
+                retVal.append(ord(c))
+        return retVal
 
-#Write a single register
-bus.write_byte_data(DEVICE_ADDRESS, DEVICE_REG_MODE1, 0x80)
+def SayHello():
+        bus = smbus.SMBus(0)
+        messageInBytes = StringToBytes("Hello World")
+        bus.write_i2c_block_data(LCD_ADDR, 0, messageInBytes)
+        
+SayHello()
