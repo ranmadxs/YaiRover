@@ -13,7 +13,7 @@ def StringToBytes(val):
 
 def SayHello():
         bus = smbus.SMBus(0)
-        messageInBytes = StringToBytes("Hello World")
+        messageInBytes = StringToBytes("SERIAL,100001,1001,0,0,10003,None,None,None")
         bus.write_i2c_block_data(LCD_ADDR, 0, messageInBytes)
         
 SayHello()
