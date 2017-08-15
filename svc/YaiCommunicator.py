@@ -36,7 +36,7 @@ class I2c():
         messageInBytes = self.StringToBytes(cmd1)
         bus.write_i2c_block_data(self.LCD_ADDR, 0, messageInBytes)
         
-        time.sleep(2)
+        time.sleep(.25)
         if (totalParts > 1) :
             cmd2 = cmd[self.MAX_I2C_CONTENT:]
             #print cmd2
