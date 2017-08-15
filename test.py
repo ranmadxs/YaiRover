@@ -3,7 +3,7 @@
 import smbus
 import time
 
-LCD_ADDR = 0x28
+LCD_ADDR = 0x09
 
 def StringToBytes(val):
         retVal = []
