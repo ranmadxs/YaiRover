@@ -1,39 +1,12 @@
-'''
-Created on 14-08-2017
-
-@author: esanchez
-'''
+#!/usr/bin/python
 
 import smbus
-import time
-# for RPI version 1, use "bus = smbus.SMBus(0)"
-bus = smbus.SMBus(1)
 
-# This is the address we setup in the Arduino Program
-address = 0x09
+bus = smbus.SMBus(0)    # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
 
-def writeNumber(value):
-    bus.write_byte(address, value)
-    # bus.write_byte_data(address, 0, value)
-    return -1
+DEVICE_ADDRESS = 0x09      #7 bit address (will be left shifted to add the read write bit)
+DEVICE_REG_MODE1 = 0x00
+DEVICE_REG_LEDOUT0 = 0x1d
 
-def readNumber():
-    number = bus.read_byte(address)
-    # number = bus.read_byte_data(address, 1)
-    return number
-
-while True:
-    try:
-        var = int(raw_input("Enter 1 - 9: "))
-    except ValueError:
-        print "Could you at least give me an actual number?"
-        continue
-
-    writeNumber(var)
-    print "RPI: Hi Arduino, I sent you ", var
-    # sleep one second
-    #time.sleep(1)
-
-    number = readNumber()
-    print "Arduino: Hey RPI, I received a digit ", number
-    print
+#Write a single register
+bus.write_byte_data(DEVICE_ADDRESS, DEVICE_REG_MODE1, 0x80)
