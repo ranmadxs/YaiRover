@@ -44,4 +44,4 @@ def sendI2CCommand(cmd):
     
         
 sendI2CCommand("SERIAL,100001,1001,0,0,100")
-#03,None,None,None
+sendI2CCommand("03,None,None,None")
