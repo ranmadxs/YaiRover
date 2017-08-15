@@ -44,4 +44,5 @@ def sendI2CCommand(cmd):
     
         
 sendI2CCommand("SERIAL,100001,1001,0,0,100")
-#sendI2CCommand("03,None,None,None")
+time.sleep(2)
+sendI2CCommand("03,None,None,None")
