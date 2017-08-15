@@ -32,7 +32,7 @@ def sendI2CCommand(cmd):
         messageInBytes = StringToBytes(cmd1)
         bus.write_i2c_block_data(LCD_ADDR, 0, messageInBytes)
         
-        '''
+        time.sleep(2)
         if (totalParts > 1) :
             cmd2 = cmd[MAX_I2C_CONTENT:]
             print cmd2
@@ -40,9 +40,9 @@ def sendI2CCommand(cmd):
             print cmd2
             messageInBytes = StringToBytes(cmd2)
             bus.write_i2c_block_data(LCD_ADDR, 0, messageInBytes)
-         '''
+        
     
         
-sendI2CCommand("SERIAL,100001,1001,0,0,100")
-time.sleep(2)
-sendI2CCommand("03,None,None,None")
+sendI2CCommand("SERIAL,100001,1001,0,0,10003,None,None,None")
+#time.sleep(2)
+#sendI2CCommand("03,None,None,None")
