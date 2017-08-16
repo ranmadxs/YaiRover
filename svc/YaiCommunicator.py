@@ -36,8 +36,8 @@ class I2c():
         messageInBytes = self.StringToBytes(cmd1)
         bus.write_i2c_block_data(self.CLIENT_ADDR, 0, messageInBytes)
         time.sleep(0.2)
-        data_received_from_Arduino = bus.read_i2c_block_data(self.CLIENT_ADDR, 0,32)
-        print(data_received_from_Arduino)
+        #data_received_from_Arduino = bus.read_i2c_block_data(self.CLIENT_ADDR, 0,32)
+        #print(data_received_from_Arduino)
         time.sleep(.25)
         if (totalParts > 1) :
             cmd2 = cmd[self.MAX_I2C_CONTENT:]
