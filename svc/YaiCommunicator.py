@@ -46,5 +46,13 @@ class I2c():
             print cmd2
             messageInBytes = self.StringToBytes(cmd2)
             bus.write_i2c_block_data(self.CLIENT_ADDR, 0, messageInBytes)
-            data_received_from_Arduino = bus.read_i2c_block_data(self.CLIENT_ADDR, 0,32)
-            print(data_received_from_Arduino)            
+                
+        smsMessage = ""
+        data_received_from_Arduino = bus.read_i2c_block_data(self.CLIENT_ADDR, 0,32)
+        for i in range(len(data_received_from_Arduino)):
+            smsMessage += chr(data_received_from_Arduino[i])
+
+        print(data_received_from_Arduino) 
+        print(smsMessage.encode('utf-8'))
+               
+                   
