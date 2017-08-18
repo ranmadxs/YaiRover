@@ -17,7 +17,6 @@ class YaiSerial():
     baudRate = SERIAL_BAUD_RATE
     
     def __init__(self):
-        print ("constructor")
         self.serialCommunicator = serial.Serial(self.port, self.baudRate, timeout=5)
     
     def send(self, str):
