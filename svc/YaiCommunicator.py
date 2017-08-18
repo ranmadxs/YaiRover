@@ -55,5 +55,7 @@ class I2c():
         
         print(data_received_from_Arduino) 
         print(smsMessage.encode('utf-8'))
+        returnMsg = smsMessage.encode('utf-8')
+        return returnMsg
                
                    
