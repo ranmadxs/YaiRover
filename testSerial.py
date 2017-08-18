@@ -9,6 +9,7 @@ import serial
 
 arduino = serial.Serial('/dev/ttyUSB0', 9600)
 arduino.write("0YL69")
+msg = arduino.read(arduino.inWaiting())
 
 #yaiSerial = YaiSerial()
 #yaiSerial.send("XDDDD")
