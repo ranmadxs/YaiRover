@@ -10,7 +10,7 @@ import serial
 import time
 
 SERIAL_BAUD_RATE = 9600
-SERIAL_DEFAULT_PORT = '/dev/ttyS0'
+SERIAL_DEFAULT_PORT = '/dev/ttyUSB0'
 
 class YaiSerial():
     
