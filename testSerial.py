@@ -7,9 +7,7 @@ Created on 17-08-2017
 #from svc.SerialSvc import YaiSerial
 import serial
 
-arduino = serial.Serial('/dev/ttyUSB0', 9600)
-arduino.write("0YL69")
-msg = arduino.read(arduino.inWaiting())
-
+arduino = serial.Serial('/dev/ttyS0', 9600)
+arduino.write("Hola mundo desde Orange Pi Zero")
 #yaiSerial = YaiSerial()
 #yaiSerial.send("XDDDD")
