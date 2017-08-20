@@ -16,7 +16,7 @@ logHandler = logging.StreamHandler()
 logHandler.setLevel(logging.DEBUG)
 
 # create formatter
-logFormatter = logging.Formatter("%(asctime)s [%(levelname)s]  %(message)s",
+logFormatter = logging.Formatter("%(asctime)s [%(levelname)s] <%(pathname)s> L%(lineno)s %(message)s",
                               "%Y-%m-%d %H:%M:%S")
 # add formatter to ch
 logHandler.setFormatter(logFormatter)
