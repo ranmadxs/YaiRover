@@ -9,6 +9,5 @@ import serial
 
 arduino = serial.Serial('/dev/ttyS0', 9600)
 arduino.write("Hola mundo desde Orange Pi Zero")
-
 #yaiSerial = YaiSerial()
 #yaiSerial.send("XDDDD")
