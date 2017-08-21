@@ -12,7 +12,12 @@ def index(request):
     return render(request, 'index.htm')
 
 def api(request):
-    return HttpResponse("api")
+    log.info("Api page")
+    return render(request, 'api.htm')
+
+def apiServo(request):
+    log.info("ServoApi page")
+    return render(request, 'apiServo.htm')
 
 def roverJoystick(request):
     return HttpResponse("roverJoystick")
