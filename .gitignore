@@ -3,4 +3,4 @@
 *.pyc
 db.sqlite3
 .settings/
-lib/logger.pyc
+lib/*.pyc
