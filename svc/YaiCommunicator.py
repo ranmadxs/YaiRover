@@ -10,7 +10,8 @@ class I2c():
     
     MAX_I2C_COMAND = 32
     MAX_I2C_CONTENT = 26
-    CLIENT_ADDR = 0x09
+    CLIENT_ADDR_YAI_SERVO = 0x08
+    CLIENT_ADDR_YAI_MOTOR = 0x09
     I2C_DEV = 0
     YAI_COMMAND_TYPE_I2C = "I2C"
     
@@ -24,7 +25,7 @@ class I2c():
         respCommand = "%s%s%s%s" % (self.YAI_COMMAND_TYPE_I2C, part, total, command);
         return respCommand
 
-    def sendCommand(self, cmd):
+    def sendCommand(self, cmd, clientAddres = CLIENT_ADDR_YAI_MOTOR):
         bus = smbus.SMBus(self.I2C_DEV)
         totalParts = 1;
         if (len(cmd) > self.MAX_I2C_CONTENT) :
@@ -34,9 +35,9 @@ class I2c():
         cmd1 = self.buildI2Cpackage(cmd1, totalParts, 1)
         print cmd1
         messageInBytes = self.StringToBytes(cmd1)
-        bus.write_i2c_block_data(self.CLIENT_ADDR, 0, messageInBytes)
+        bus.write_i2c_block_data(clientAddres, 0, messageInBytes)
         
-        #data_received_from_Arduino = bus.read_i2c_block_data(self.CLIENT_ADDR, 0,32)
+        #data_received_from_Arduino = bus.read_i2c_block_data(clientAddres, 0,32)
         #print(data_received_from_Arduino)
         time.sleep(.25)
         if (totalParts > 1) :
@@ -45,11 +46,11 @@ class I2c():
             cmd2 = self.buildI2Cpackage(cmd2, totalParts, 2)
             print cmd2
             messageInBytes = self.StringToBytes(cmd2)
-            bus.write_i2c_block_data(self.CLIENT_ADDR, 0, messageInBytes)
+            bus.write_i2c_block_data(clientAddres, 0, messageInBytes)
         
         time.sleep(0.2)        
         smsMessage = ""
-        data_received_from_Arduino = bus.read_i2c_block_data(self.CLIENT_ADDR, 0,32)
+        data_received_from_Arduino = bus.read_i2c_block_data(clientAddres, 0,32)
         for i in range(len(data_received_from_Arduino)):
             smsMessage += chr(data_received_from_Arduino[i])
         
@@ -57,5 +58,3 @@ class I2c():
         print(smsMessage.encode('utf-8'))
         returnMsg = smsMessage.encode('utf-8')
         return returnMsg
-               
-                   
