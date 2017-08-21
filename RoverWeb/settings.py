@@ -130,3 +130,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#STATIC_URL = '/../webapp/templates/'
+STATIC_FILES_PATH = PROJECT_PATH + '/../webapp/static/'
+#STATIC_ROOT = "/tmp/static/"
+
+STATICFILES_DIRS = [
+    STATIC_FILES_PATH,
+]
+
+log.info(STATIC_FILES_PATH)

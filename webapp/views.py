@@ -7,8 +7,21 @@ from django.http import HttpResponse
 from django.views.generic.base import View
 from lib.logger import logger as log
 
-def index2(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def index(request):
+    log.info("Index page")
+    return render(request, 'index.htm')
+
+def api(request):
+    return HttpResponse("api")
+
+def roverJoystick(request):
+    return HttpResponse("roverJoystick")
+
+def logs(request):
+    return HttpResponse("logs")
+
+def pipeline(request):
+    return HttpResponse("pipeline")
 
 def index3(request):
     context = {'varName': 'xdddd'}
