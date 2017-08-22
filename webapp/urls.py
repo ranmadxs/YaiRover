@@ -5,18 +5,21 @@ Created on 20-08-2017
 '''
 
 from django.conf.urls import url
-import webapp
-from webapp.views import HomePageView
+#from webapp.views import HomePageView
+from webapp.views.main import MainController
+from webapp.views.command import CommandController
 
-urlpatterns = [
-    
-    url(r'^$', webapp.views.index, name='index'),
-    #url(r'^$', HomePageView.as_view(), name='index'),
-    url(r'^api$', webapp.views.api, name='api'),
-    url(r'^apiServo', webapp.views.apiServo, name='apiServo'),
-    url(r'^roverJoystick', webapp.views.roverJoystick, name='roverJoystick'),
-    url(r'^pipeline', webapp.views.pipeline, name='pipeline'),
-    url(r'^logs', webapp.views.logs, name='logs'),
-    
+mainController = MainController()
+commandController = CommandController()
+
+urlpatterns = [    
+    url(r'^$', mainController.index, name='index'),
+    url(r'^api$', mainController.api, name='api'),
+    url(r'^apiServo', mainController.apiServo, name='apiServo'),
+    url(r'^roverJoystick', mainController.roverJoystick, name='roverJoystick'),
+    url(r'^pipeline', mainController.pipeline, name='pipeline'),
+    url(r'^logs', mainController.logs, name='logs'),
+    url(r'^joystick.js', mainController.joystickJs, name='joystick.js'),
+    url(r'^cmd', commandController.cmd, name='cmd'),
 ]
 

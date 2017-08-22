@@ -5,7 +5,7 @@ Created on 13-08-2017
 '''
 
 from lib.logger import logger as log
-from svc.Camera import WebCam
+from svc.CameraSvc import WebCam
 
 
 log.info('>> Inicio YaiRover <<')
