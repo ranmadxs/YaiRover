@@ -35,7 +35,7 @@ print strH
 h = hex(address)[2:].zfill(12)
 strH = ":".join(i + j for i, j in zip(h[::2], h[1::2]))
 print strH
-
+'''
 import socket
 import fcntl
 import struct
@@ -50,10 +50,14 @@ def get_ip_address(ifname):
 
 ip = get_ip_address('eth0')  # '192.168.0.110'
 print ip
-
+'''
 
 import netifaces as ni
-ni.ifaddresses('eth0')
-ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
-print ip
+
+ifaces = ni.interfaces()
+print ifaces
+
+#ni.ifaddresses('eth0')
+#ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+#print ip
 
