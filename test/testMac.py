@@ -51,3 +51,9 @@ def get_ip_address(ifname):
 ip = get_ip_address('eth0')  # '192.168.0.110'
 print ip
 
+
+import netifaces as ni
+ni.ifaddresses('eth0')
+ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+print ip
+
