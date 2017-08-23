@@ -71,10 +71,9 @@ class YaiCommandSvc():
                 clientIp = socket.gethostbyname(socket.gethostname())
                 content = "{\"CLIENT_IP\":\""+ clientIp+"\""
                 if ((not yaiCommand.P1 is None) and (yaiCommand.P1.lower() == "true")):
-                    address = ", \"MAC\":\"%d\"" % get_mac()   
-                    print address
-                    mac = "".join(c + ":" if i % 2 else c for i, c in enumerate(address[2:].zfill(12)))[:-1]                 
-                    content += mac           
+                    address = get_mac()   
+                    mac = "".join(c + ":" if i % 2 else c for i, c in enumerate(hex(address)[2:].zfill(12)))[:-1]                 
+                    content += ", \"MAC\":\"%s\"" % mac         
                 content += "}"
                 
         
