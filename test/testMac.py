@@ -52,10 +52,14 @@ ip = get_ip_address('eth0')  # '192.168.0.110'
 print ip
 '''
 
-import netifaces as ni
+import netifaces
 
-ifaces = ni.interfaces()
+ifaces = netifaces.interfaces()
 print ifaces
+
+for interface in netifaces.interfaces():
+    ip = netifaces.ifaddresses(interface)
+    print ip
 
 #ni.ifaddresses('eth0')
 #ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
