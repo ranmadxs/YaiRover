@@ -66,6 +66,7 @@ class YaiCommandSvc():
                 raise YaiRoverException("cmd YAI_GET_CURRENT_LOG No ha sido implementado")
             
             if(command == EnumCommons.CommandsEnum.YAI_SERIAL_CMD_GET_IP.value):
+                yaiResult.type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_RESULT.value
                 log.debug("ejecutando get IP")
                 resultStr = EnumCommons.StatusEnum.STATUS_OK.value;
                 clientIp = self.yaiNetworkSvc.getIps()
