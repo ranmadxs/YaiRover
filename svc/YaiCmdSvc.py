@@ -8,12 +8,12 @@ from model.vo import YaiCommand, YaiResult
 from roverenum import EnumCommons
 from svc.YaiCommunicatorSvc import I2c
 from utils.exception import YaiRoverException
-import socket
-from uuid import getnode as get_mac
+from svc.NetworkSvc import YaiNetworkSvc
 
 class YaiCommandSvc():
     
     yaiCommunicator = I2c()
+    yaiNetworkSvc = YaiNetworkSvc()
     
     def buildMessage(self, yaiCommand = None):
     
@@ -68,13 +68,10 @@ class YaiCommandSvc():
             if(command == EnumCommons.CommandsEnum.YAI_SERIAL_CMD_GET_IP.value):
                 log.debug("ejecutando get IP")
                 resultStr = EnumCommons.StatusEnum.STATUS_OK.value;
-                clientIp = socket.gethostbyname(socket.gethostname())
-                content = "{\"CLIENT_IP\":\""+ clientIp+"\""
-                if ((not yaiCommand.P1 is None) and (yaiCommand.P1.lower() == "true")):
-                    address = get_mac()   
-                    mac = "".join(c + ":" if i % 2 else c for i, c in enumerate(hex(address)[2:].zfill(12)))[:-1]                 
-                    content += ", \"MAC\":\"%s\"" % mac         
-                content += "}"
+                clientIp = self.yaiNetworkSvc.getIps()
+                content = "["
+                content += ",". join(str(e) for e in clientIp)     
+                content += "]"
                 
         
         yaiResult.content = content

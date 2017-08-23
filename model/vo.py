@@ -6,6 +6,12 @@ Created on 22-08-2017
 from model import AbstractUtilDTO
 from roverenum import EnumCommons
 
+class YaiNetwork(AbstractUtilDTO):
+    broadcast = None
+    netmask = None
+    addr = None
+    mac = None
+
 class YaiCommand(AbstractUtilDTO):
     execute = False
     printCmd = False

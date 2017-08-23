@@ -57,11 +57,23 @@ import netifaces
 ifaces = netifaces.interfaces()
 print ifaces
 
-for interface in netifaces.interfaces():
-    ip = netifaces.ifaddresses(interface)
-    print ip
 
-#ni.ifaddresses('eth0')
-#ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+for interface in netifaces.interfaces():
+    addrs = netifaces.ifaddresses(interface)
+    try:
+        print addrs[netifaces.AF_INET][0]
+        print addrs[netifaces.AF_LINK][0]
+        
+    except KeyError:
+        pass
+    #addr = netifaces.ifaddresses(interface)[netifaces.AF_INET]
+    #addr = networkDevice[netifaces][0]['addr']
+    #print addr
+    #print addrs
+
+print netifaces.AF_LINK
+print netifaces.AF_INET
+print netifaces.ifaddresses('{53DB9CCE-4728-41E8-ADC4-F6634F394D25}')
+#ip = netifaces.ifaddresses('{53DB9CCE-4728-41E8-ADC4-F6634F394D25}')[netifaces.AF_INET][0]['addr']
 #print ip
 
