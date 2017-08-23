@@ -3,10 +3,13 @@ Created on 22-08-2017
 
 @author: instala
 '''
+from lib.logger import logger as log
 from model.vo import YaiCommand, YaiResult
 from roverenum import EnumCommons
 from svc.YaiCommunicatorSvc import I2c
 from utils.exception import YaiRoverException
+import socket
+from uuid import getnode as get_mac
 
 class YaiCommandSvc():
     
@@ -43,6 +46,8 @@ class YaiCommandSvc():
         if yaiCommand.execute is None:
             raise YaiRoverException("yaiCommand.execute no puede ser nulo")      
         
+        log.debug("Execute Command")
+        propagate = False;
         content = "Command not found";
         resultStr = EnumCommons.StatusEnum.STATUS_NOK.value;
         
@@ -52,13 +57,28 @@ class YaiCommandSvc():
             #self.yaiCommunicator.sendCommand("I2C,100001,1001,0,0,10002,None,None,None", I2c.CLIENT_ADDR_YAI_MOTOR)            
             command = yaiCommand.COMMAND
             
+            log.debug("cmd::" + command)
+            
             if command is None:
                 raise YaiRoverException("yaiCommand.COMMAND no puede ser nulo")
             
             if(command == EnumCommons.CommandsEnum.YAI_GET_CURRENT_LOG.value):
                 raise YaiRoverException("cmd YAI_GET_CURRENT_LOG No ha sido implementado")
             
+            if(command == EnumCommons.CommandsEnum.YAI_SERIAL_CMD_GET_IP.value):
+                log.debug("ejecutando get IP")
+                resultStr = EnumCommons.StatusEnum.STATUS_OK.value;
+                clientIp = socket.gethostbyname(socket.gethostname())
+                content = "{\"CLIENT_IP\":\""+ clientIp+"\""
+                if ((not yaiCommand.P1 is None) and (yaiCommand.P1.lower() == "true")):
+                    address = ", \"MAC\":\"%d\"" % get_mac()   
+                    print address
+                    mac = "".join(c + ":" if i % 2 else c for i, c in enumerate(address[2:].zfill(12)))[:-1]                 
+                    content += mac           
+                content += "}"
+                
         
         yaiResult.content = content
         yaiResult.status = resultStr
+        yaiResult.propagate = propagate
         return yaiResult
