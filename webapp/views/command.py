@@ -14,7 +14,9 @@ class CommandController():
     
     def cmd(self, request):            
         yaiCommand = YaiCommand(request)
-        yaiCommand = self.yaiCommandSvc.buildMessage(yaiCommand)
+        yaiCommand.type = yaiCommand.TIPO_CALL
+        yaiCommand = self.yaiCommandSvc.buildMessage(yaiCommand)        
         log.debug(yaiCommand.__str__())
+        yaiResponse = self.yaiCommandSvc.execute(yaiCommand)
         #en el return debe estar el string que devuelve el servicio    
-        return HttpResponse("logs")
+        return HttpResponse(yaiResponse.__str__())

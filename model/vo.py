@@ -24,4 +24,12 @@ class YaiCommand(AbstractUtilDTO):
     address = 0x00
     json = ""
     
-    
+class YaiResult(AbstractUtilDTO):
+    status = None
+    content = ""
+    R1 = None
+    R2 = None
+    R3 = None
+    R4 = None
+    type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_NONE.value
+        
