@@ -6,7 +6,7 @@ Created on 23-08-2017
 
 from model.vo import YaiResult
 
-strRes = "RESULT,OK,RIGH##################"
+strRes = "RESULT,OK,true##################"
 
 yaiResult = YaiResult()
 yaiResult.__resToObject__(strRes)

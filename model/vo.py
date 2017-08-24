@@ -5,6 +5,7 @@ Created on 22-08-2017
 '''
 from model import AbstractUtilDTO
 from roverenum import EnumCommons
+from lib.logger import logger as log
 
 class YaiNetwork(AbstractUtilDTO):
     broadcast = None
@@ -41,8 +42,11 @@ class YaiResult(AbstractUtilDTO):
     type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_NONE.value
     
     def __resToObject__(self, msg = None):
+        log.info(msg)
         msg = msg.replace("#", "")
+        log.info(msg)
         resMsgArray = msg.split(",")
+        log.info(resMsgArray)
         self.message = msg
         self.type = resMsgArray[0]
         countR = 0     
@@ -50,5 +54,5 @@ class YaiResult(AbstractUtilDTO):
             if countR > 0:
                 setattr(self, "R%d"%countR, r)
             countR = countR + 1                                        
-        print msg      
+        log.info(msg)      
         
