@@ -3,9 +3,10 @@ Created on 22-08-2017
 
 @author: instala
 '''
+import time
 from lib.logger import logger as log
 from model.vo import YaiCommand, YaiResult
-from roverenum import EnumCommons
+from roverenum import EnumCommons, EnumCommunicator
 from svc.YaiCommunicatorSvc import I2c
 from utils.exception import YaiRoverException
 from svc.NetworkSvc import YaiNetworkSvc
@@ -50,6 +51,7 @@ class YaiCommandSvc():
         propagate = False;
         content = "Command not found";
         resultStr = EnumCommons.StatusEnum.STATUS_NOK.value;
+        responseCommand = None
         
         yaiResult = YaiResult()
          
@@ -74,8 +76,57 @@ class YaiCommandSvc():
                 content += ",". join(str(e) for e in clientIp)     
                 content += "]"
                 
+            if (command == EnumCommons.CommandsEnum.OBSTACLE_READER.value):
+                resultStr = EnumCommons.StatusEnum.STATUS_OK.value
+                propagate = True
+                yaiCommand.address = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_MOTOR.value
+                yaiResult = self.propagateCommand(yaiCommand)               
+
+            #Comandos que se propagan con delay
+            if ((command == EnumCommons.CommandsEnum.SERVO_STOP.value) 
+                or (command == EnumCommons.CommandsEnum.SERVO_ACTION_CONTINUOUS.value)
+                or (command == EnumCommons.CommandsEnum.SERVO_ACTION_ANGLE.value)):
+                resultStr = EnumCommons.StatusEnum.STATUS_OK.value
+                propagate = True
+                tiempoStop = int(yaiCommand.p2)
+
+                yaiCommand.address = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_SERVO.value
+                time.sleep(tiempoStop)
+                yaiResult = self.propagateCommand(yaiCommand)        
+
+            if ((command == EnumCommons.CommandsEnum.LASER_ACTION.value) 
+                or (command == EnumCommons.CommandsEnum.ROVER_STOP.value)
+                or (command == EnumCommons.CommandsEnum.ROVER_MOVE_MANUAL_BODY.value)):
+                resultStr = EnumCommons.StatusEnum.STATUS_OK.value
+                propagate = True
+                tiempoStop = int(yaiCommand.P2)
+
+                yaiCommand.address = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_MOTOR.value
+                time.sleep(tiempoStop)
+                yaiResult = self.propagateCommand(yaiCommand)                                                    
+                
+        if propagate :
+            content = "{\"propagate\": \"%s\"}" % yaiCommand.type
         
         yaiResult.content = content
         yaiResult.status = resultStr
         yaiResult.propagate = propagate
+        return yaiResult
+
+    def propagateCommand(self, yaiCommand):
+        response = None
+        yaiResult = YaiResult()
+        yaiResult.status = EnumCommons.StatusEnum.STATUS_NOK.value
+        if (yaiCommand.type == EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_SERIAL.value):
+            log.info("SERIAL >> ");
+            yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value
+            yaiResult.message = yaiCommand.message
+            yaiResult.type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_RESULT.value
+        
+        if (yaiCommand.type == EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_I2C.value):
+            log.info("I2C >> ");
+            yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value
+            responseCommand = self.yaiCommunicator.sendCommand(yaiCommand.message, yaiCommand.address)
+            yaiResult.__resToObject__(responseCommand)
+                    
         return yaiResult

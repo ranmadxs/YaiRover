@@ -33,9 +33,22 @@ class YaiCommand(AbstractUtilDTO):
 class YaiResult(AbstractUtilDTO):
     status = None
     content = ""
+    message = ""
     R1 = None
     R2 = None
     R3 = None
     R4 = None
     type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_NONE.value
+    
+    def __resToObject__(self, msg = None):
+        msg = msg.replace("#", "")
+        resMsgArray = msg.split(",")
+        self.message = msg
+        self.type = resMsgArray[0]
+        countR = 0     
+        for r in resMsgArray:
+            if countR > 0:
+                setattr(self, "R%d"%countR, r)
+            countR = countR + 1                                        
+        print msg      
         

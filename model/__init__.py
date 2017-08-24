@@ -27,4 +27,4 @@ class AbstractUtilDTO:
     def __str__(self):
         var = dict((name, getattr(self, name)) for name in dir(self) if not name.startswith('__'))     
         varStr = var.__str__().replace("'", '"')
-        return '{"%s" : %s}' % (self.__class__, varStr)
+        return '{"%s" : %s}' % (self.__class__, varStr)      
