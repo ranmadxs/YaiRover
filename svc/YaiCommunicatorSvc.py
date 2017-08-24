@@ -59,7 +59,5 @@ class I2c():
         msgStr = smsMessage.encode('utf-8')
         
         log.info("<<" + msgStr)
-        yaiResult = YaiResult()
-        yaiResult.__resToObject__(msgStr)
         
-        return yaiResult
+        return msgStr

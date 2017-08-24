@@ -92,9 +92,9 @@ class YaiCommandSvc():
 
                 yaiCommand.address = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_SERVO.value
                 time.sleep(tiempoStop)
-                log.debug("antes de propagar YaiServo")
+                log.debug("antes de propagar YaiMotor")
                 yaiResult = self.propagateCommand(yaiCommand)
-                log.debug("antes de propagar YaiServo")        
+                log.debug("despues de propagar YaiMotor")        
 
             if ((command == EnumCommons.CommandsEnum.LASER_ACTION.value) 
                 or (command == EnumCommons.CommandsEnum.ROVER_STOP.value)
@@ -117,22 +117,6 @@ class YaiCommandSvc():
         yaiResult.propagate = propagate
         return yaiResult
 
-    def resToObject(self, yaiResult = None, msg = None):
-        log.info(msg)
-        msg = msg.replace("#", "")
-        log.info(msg)
-        resMsgArray = msg.split(",")
-        log.info(resMsgArray)
-        yaiResult.message = msg
-        yaiResult.type = resMsgArray[0]
-        countR = 0     
-        for r in resMsgArray:
-            if countR > 0:
-                setattr(yaiResult, "R%d"%countR, r)
-            countR = countR + 1                                        
-        log.info(msg)   
-        return yaiResult
-
     def propagateCommand(self, yaiCommand):
         response = None
         yaiResult = YaiResult()
@@ -148,7 +132,6 @@ class YaiCommandSvc():
             log.info("I2C >> ");
             yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value
             responseCommand = self.yaiCommunicator.sendCommand(yaiCommand.message, yaiCommand.address)
-            yaiResult = self.resToObject(responseCommand, yaiResult)
-            log.info("Saliendo de I2c XDDD")
+            yaiResult.__resToObject__(responseCommand)
                     
         return yaiResult
