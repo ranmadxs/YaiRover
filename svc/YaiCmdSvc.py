@@ -117,6 +117,22 @@ class YaiCommandSvc():
         yaiResult.propagate = propagate
         return yaiResult
 
+    def resToObject(self, yaiResult = None, msg = None):
+        log.info(msg)
+        msg = msg.replace("#", "")
+        log.info(msg)
+        resMsgArray = msg.split(",")
+        log.info(resMsgArray)
+        yaiResult.message = msg
+        yaiResult.type = resMsgArray[0]
+        countR = 0     
+        for r in resMsgArray:
+            if countR > 0:
+                setattr(yaiResult, "R%d"%countR, r)
+            countR = countR + 1                                        
+        log.info(msg)   
+        return yaiResult
+
     def propagateCommand(self, yaiCommand):
         response = None
         yaiResult = YaiResult()
@@ -132,6 +148,7 @@ class YaiCommandSvc():
             log.info("I2C >> ");
             yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value
             responseCommand = self.yaiCommunicator.sendCommand(yaiCommand.message, yaiCommand.address)
-            yaiResult.__resToObject__(responseCommand)
+            yaiResult = self.resToObject(responseCommand, yaiResult)
+            log.info("Saliendo de I2c XDDD")
                     
         return yaiResult

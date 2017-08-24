@@ -39,20 +39,5 @@ class YaiResult(AbstractUtilDTO):
     R2 = None
     R3 = None
     R4 = None
-    type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_NONE.value
-    
-    def __resToObject__(self, msg = None):
-        log.info(msg)
-        msg = msg.replace("#", "")
-        log.info(msg)
-        resMsgArray = msg.split(",")
-        log.info(resMsgArray)
-        self.message = msg
-        self.type = resMsgArray[0]
-        countR = 0     
-        for r in resMsgArray:
-            if countR > 0:
-                setattr(self, "R%d"%countR, r)
-            countR = countR + 1                                        
-        log.info(msg)      
+    type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_NONE.value   
         
