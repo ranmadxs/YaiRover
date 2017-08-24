@@ -122,6 +122,7 @@ class YaiCommandSvc():
             yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value
             yaiResult.message = yaiCommand.message
             yaiResult.type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_RESULT.value
+            raise YaiRoverException("propagateCommand SERIAL not implemented yet")
         
         if (yaiCommand.type == EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_I2C.value):
             log.info("I2C >> ");
