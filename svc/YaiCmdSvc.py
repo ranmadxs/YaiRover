@@ -92,7 +92,9 @@ class YaiCommandSvc():
 
                 yaiCommand.address = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_SERVO.value
                 time.sleep(tiempoStop)
-                yaiResult = self.propagateCommand(yaiCommand)        
+                log.debug("antes de propagar YaiServo")
+                yaiResult = self.propagateCommand(yaiCommand)
+                log.debug("antes de propagar YaiServo")        
 
             if ((command == EnumCommons.CommandsEnum.LASER_ACTION.value) 
                 or (command == EnumCommons.CommandsEnum.ROVER_STOP.value)
@@ -103,7 +105,9 @@ class YaiCommandSvc():
 
                 yaiCommand.address = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_MOTOR.value
                 time.sleep(tiempoStop)
-                yaiResult = self.propagateCommand(yaiCommand)                                                    
+                log.debug("antes de propagar YaiMotor")
+                yaiResult = self.propagateCommand(yaiCommand)
+                log.debug("despues de propagar YaiMotor")                                                    
                 
         if propagate :
             content = "{\"propagate\": \"%s\"}" % yaiCommand.type
