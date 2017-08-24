@@ -47,7 +47,7 @@ class YaiCommandSvc():
         if yaiCommand.execute is None:
             raise YaiRoverException("yaiCommand.execute no puede ser nulo")      
         
-        log.debug("Execute Command")
+        log.info("Execute Command")
         propagate = False;
         content = "Command not found";
         resultStr = EnumCommons.StatusEnum.STATUS_NOK.value;
@@ -59,7 +59,7 @@ class YaiCommandSvc():
             #self.yaiCommunicator.sendCommand("I2C,100001,1001,0,0,10002,None,None,None", I2c.CLIENT_ADDR_YAI_MOTOR)            
             command = yaiCommand.COMMAND
             
-            log.debug("cmd::" + command)
+            log.info("cmd::" + command)
             
             if command is None:
                 raise YaiRoverException("yaiCommand.COMMAND no puede ser nulo")
@@ -122,14 +122,14 @@ class YaiCommandSvc():
         yaiResult = YaiResult()
         yaiResult.status = EnumCommons.StatusEnum.STATUS_NOK.value
         if (yaiCommand.type == EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_SERIAL.value):
-            log.info("SERIAL >> ");
+            log.debug("SERIAL >> Propagate");
             yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value
             yaiResult.message = yaiCommand.message
             yaiResult.type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_RESULT.value
             raise YaiRoverException("propagateCommand SERIAL not implemented yet")
         
         if (yaiCommand.type == EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_I2C.value):
-            log.info("I2C >> ");
+            log.debug("I2C >> Propagate");
             yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value
             responseCommand = self.yaiCommunicator.sendCommand(yaiCommand.message, yaiCommand.address)
             yaiResult.__resToObject__(responseCommand)

@@ -28,13 +28,14 @@ class I2c():
 
     def sendCommand(self, cmd, clientAddres = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_MOTOR.value):        
         bus = smbus.SMBus(self.I2C_DEV)
+        log.info(" >> %s" % cmd)
         totalParts = 1;
         if (len(cmd) > self.MAX_I2C_CONTENT) :
             totalParts = 2;
         cmd1 = cmd[:self.MAX_I2C_CONTENT]
         #print cmd1
         cmd1 = self.buildI2Cpackage(cmd1, totalParts, 1)
-        log.info("[p1]>>" + cmd1)
+        log.debug("[p1]>>" + cmd1)
         messageInBytes = self.StringToBytes(cmd1)
         bus.write_i2c_block_data(clientAddres, 0, messageInBytes)
         
@@ -45,7 +46,7 @@ class I2c():
             cmd2 = cmd[self.MAX_I2C_CONTENT:]
             #print cmd2
             cmd2 = self.buildI2Cpackage(cmd2, totalParts, 2)
-            log.info("[p2]>>" + cmd2)
+            log.debug("[p2]>>" + cmd2)
             messageInBytes = self.StringToBytes(cmd2)
             bus.write_i2c_block_data(clientAddres, 0, messageInBytes)
         
@@ -58,6 +59,6 @@ class I2c():
         log.debug(data_received_from_Arduino) 
         msgStr = smsMessage.encode('utf-8')
         
-        log.info("<<" + msgStr)
+        log.info(" << %s" % msgStr)
         
         return msgStr
