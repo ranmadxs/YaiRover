@@ -16,3 +16,5 @@ camera = WebCam()
 camera.capturarDatos()
 
 log.info('foto terminada de capturar')
+
+raise Exception("yaiCommand no puede ser nulo") 
