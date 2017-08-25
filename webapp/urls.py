@@ -8,9 +8,11 @@ from django.conf.urls import url
 #from webapp.views import HomePageView
 from webapp.views.main import MainController
 from webapp.views.command import CommandController
+from webapp.views.video import VideoController
 
 mainController = MainController()
 commandController = CommandController()
+videoController = VideoController()
 
 urlpatterns = [    
     url(r'^$', mainController.index, name='index'),
@@ -23,5 +25,6 @@ urlpatterns = [
     url(r'^cmd', commandController.cmd, name='cmd'),
     url(r'^pipeline/cmd', commandController.pipelineCmd, name='pipelineCmd'),
     url(r'^js/pipeline.js', mainController.pipelineJs, name='pipeline.js'),
+    url(r'^video/stream', videoController.stream, name='videoStream'),
 ]
 
