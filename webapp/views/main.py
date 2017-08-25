@@ -13,6 +13,8 @@ from svc.ContextSvc import YaiContext
 
 class MainController():
     
+    yaiContext = YaiContext()
+    
     def index(self, request):
         log.info("Index page")
         return render(request, 'index.htm')
@@ -26,19 +28,24 @@ class MainController():
         return render(request, 'apiServo.htm')
 
     def roverJoystick(self, request):
-        yaiContext = YaiContext()
-        context = yaiContext.getCommonContext()
+        context = self.yaiContext.getCommonContext()
         log.info("roverJoystick page")
         return render(request, 'pages/joystick.htm', context)
 
     def joystickJs(self, request):
-        yaiContext = YaiContext()
-        context = yaiContext.getCommonContext()
+        context = self.yaiContext.getCommonContext()
         log.info("roverJoystick js")
-        return render(request, 'js/joystick.js', context)
+        return render(request, 'js/joystick.js', context)        
+
+    def pipelineJs(self, request):
+        context = self.yaiContext.getCommonContext()
+        log.info("pipeline js")
+        return render(request, 'js/pipeline.js', context)        
             
     def logs(self, request):
         return HttpResponse("logs")
     
     def pipeline(self, request):
-        return HttpResponse("pipeline")
+        context = self.yaiContext.getCommonContext()
+        log.info("pipeline")
+        return render(request, 'pages/pipeline.htm', context)

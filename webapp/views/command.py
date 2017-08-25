@@ -7,10 +7,15 @@ from lib.logger import logger as log
 from django.http import HttpResponse
 from model.vo import YaiCommand
 from svc.YaiCmdSvc import YaiCommandSvc
+from django.shortcuts import render
 
 class CommandController():
     
     yaiCommandSvc = YaiCommandSvc()
+    
+    def pipelineCmd(self, request):
+        log.info("pipelineCmd")
+        return HttpResponse("pipelin cmd")
     
     def cmd(self, request):            
         yaiCommand = YaiCommand(request)

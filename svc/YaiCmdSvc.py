@@ -88,10 +88,11 @@ class YaiCommandSvc():
                 or (command == EnumCommons.CommandsEnum.SERVO_ACTION_ANGLE.value)):
                 resultStr = EnumCommons.StatusEnum.STATUS_OK.value
                 propagate = True
-                tiempoStop = int(yaiCommand.p2)
+                if (not yaiCommand.P2 is None) and (yaiCommand.P2.isnumeric()):
+                    tiempoStop = int(yaiCommand.P2)
+                    time.sleep(tiempoStop)
 
-                yaiCommand.address = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_SERVO.value
-                time.sleep(tiempoStop)
+                yaiCommand.address = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_SERVO.value                
                 log.debug("antes de propagar YaiMotor")
                 yaiResult = self.propagateCommand(yaiCommand)
                 log.debug("despues de propagar YaiMotor")        
@@ -101,7 +102,9 @@ class YaiCommandSvc():
                 or (command == EnumCommons.CommandsEnum.ROVER_MOVE_MANUAL_BODY.value)):
                 resultStr = EnumCommons.StatusEnum.STATUS_OK.value
                 propagate = True
-                tiempoStop = int(yaiCommand.P2)
+                if (not yaiCommand.P2 is None) and (yaiCommand.P2.isnumeric()):
+                    tiempoStop = int(yaiCommand.P2)
+                    time.sleep(tiempoStop)
 
                 yaiCommand.address = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_MOTOR.value
                 time.sleep(tiempoStop)

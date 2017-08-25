@@ -1,12 +1,15 @@
-{% load static %}
 <!doctype html>
+{% load static %}
 <html lang="es">
 <head>
 	<meta charset="UTF-8" />
-	<script type='application/javascript' src='{{ request.get_full_path }}/../joystick.js'></script>
+	<script type='application/javascript' src='http://{{ request.get_host }}/rover/js/joystick.js'></script>
 	<link rel="stylesheet" type="text/css" href="{% static "css/joystick.css" %}">
 </head>
 <body>
+<div id="breadcrumbs">
+	{{ request.get_full_path }}
+</div>
 <center>
 <div class='contenedorTableDiv'>Joystick 1 (Servo)
     <div class='contenidos'>

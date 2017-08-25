@@ -17,9 +17,11 @@ urlpatterns = [
     url(r'^api$', mainController.api, name='api'),
     url(r'^apiServo', mainController.apiServo, name='apiServo'),
     url(r'^roverJoystick', mainController.roverJoystick, name='roverJoystick'),
-    url(r'^pipeline', mainController.pipeline, name='pipeline'),
+    url(r'^pipeline/pipeline.htm', mainController.pipeline, name='pipeline.htm'),
     url(r'^logs', mainController.logs, name='logs'),
-    url(r'^joystick.js', mainController.joystickJs, name='joystick.js'),
+    url(r'^js/joystick.js', mainController.joystickJs, name='joystick.js'),
     url(r'^cmd', commandController.cmd, name='cmd'),
+    url(r'^pipeline/cmd', commandController.pipelineCmd, name='pipelineCmd'),
+    url(r'^js/pipeline.js', mainController.pipelineJs, name='pipeline.js'),
 ]
 
