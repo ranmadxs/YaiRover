@@ -221,14 +221,32 @@ $( document ).ready(function() {
 			pipeline.push(TIPO_CALL+","+$("#command option:selected").val()+","+p1+","+p2+","+p3+","+p4+","+p5+","+p6+","+p7);
 		}
 	});
+	
+	
 	$("#ejecutar").click(function() {
 		var data = new FormData();	
 		for	(j = 0; j < pipeline.length; j++){
 			data.append('cmd['+j+']', pipeline[j]);
 		}
 
+		//Esto de abajo es por django
+		data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+		
+		/*
+		$.ajax({
+			  type: "POST",
+			  url: '/rover/pipeline/cmd',
+			    data:{
+			        csrfmiddlewaretoken: '{{ csrf_token }}'
+			      },
+			      success: function(result) {
+			    	  alert(result) 
+			      }			  
+		});
+		
+		*/
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', '/rover/pipelineCmd', true);
+		xhr.open('POST', 'http://{{ request.get_host }}/rover/pipeline/cmd', true);
 		xhr.onload = function () {
 			//console.log(this.responseText);
 			alert(this.responseText);

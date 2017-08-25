@@ -30,6 +30,21 @@ class YaiCommand(AbstractUtilDTO):
     P7 = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_NONE.value
     address = 0x00
     json = ""
+
+    def __resToObject__(self, msgList = None):
+        msg = msgList[0]
+        self.message = msg
+        resMsgArray = msg.split(",")
+        self.type = resMsgArray[0]        
+        self.COMMAND = resMsgArray[1]
+        self.P1 = resMsgArray[2]
+        self.P2 = resMsgArray[3]
+        self.P3 = resMsgArray[4]
+        self.P4 = resMsgArray[5]
+        self.P5 = resMsgArray[6]
+        self.P6 = resMsgArray[7]
+        self.P7 = resMsgArray[8]
+    
     
 class YaiResult(AbstractUtilDTO):
     status = None
