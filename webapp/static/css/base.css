@@ -1,0 +1,142 @@
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.input_text_small_1 {
+    width: 40px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.input_text_small_2 {
+    width: 70px;
+    padding: 6px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.select_small_1 {
+    width: 130px;
+    padding: 6px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.select_small_2 {
+    width: 230px;
+    padding: 6px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.buttonType {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 20px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.buttonType:hover {
+    background-color: #45a049;
+}
+
+.divForm {
+	width: 90%;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.divTable {
+	width: 90%;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 6px;
+    font-family: Arial;
+    font-size: 10px;
+}
+
+#rcorners {
+    font-family: Arial;
+    font-size: 12px;
+	color: white;
+    border-radius: 4px;
+    padding-bottom: 5px;     
+    padding-top: 2px;   
+    width: 75px;
+    height: 10px;  
+    valign: center;
+    text-align: center;
+    background: #0f6ab4;
+}
+
+#rcorners_serial {
+    font-family: Arial;
+    font-size: 12px;
+	color: white;
+    border-radius: 4px;
+    padding-bottom: 5px;     
+    padding-top: 2px;   
+    width: 75px;
+    height: 10px;  
+    valign: center;
+    text-align: center;
+    background: #F09A05;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
