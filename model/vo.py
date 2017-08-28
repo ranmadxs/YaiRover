@@ -4,7 +4,7 @@ Created on 22-08-2017
 @author: instala
 '''
 from model import AbstractUtilDTO
-from roverenum import EnumCommons
+from roverenum import EnumCommons, EnumCommunicator
 from lib.logger import logger as log
 
 class YaiNetwork(AbstractUtilDTO):
@@ -30,6 +30,7 @@ class YaiCommand(AbstractUtilDTO):
     P7 = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_NONE.value
     address = 0x00
     json = ""
+    serialPort = EnumCommunicator.SerialEnum.SERIAL_TTYS1_PORT.value
 
     def __resToObject__(self, msgList = None):
         msg = msgList[0]
