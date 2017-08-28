@@ -35,7 +35,7 @@ class VideoCamera(object):
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
 
-class WebCam():
+class FsWebCam():
     def capturarDatos(self):        
         
         if not os.path.exists(FOLDER_WEBCAM):

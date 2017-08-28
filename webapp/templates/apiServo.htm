@@ -101,11 +101,11 @@
 </table>
 <h3>Try it out!</h3>
 <pre>
-curl -X GET --header "Accept: application/json;charset=UTF-8" "http://${clientIp}/cmd?COMMAND=200001&P1=2001&P2=0&P3=20001&P4=21001&P5=2&P6=None&P7=None"
+curl -X GET --header "Accept: application/json;charset=UTF-8" "http://{{ request.get_host }}/cmd?COMMAND=200001&P1=2001&P2=0&P3=20001&P4=21001&P5=2&P6=None&P7=None"
 </pre>
 <h4>Http Request</h4>
 <pre>
-http://${clientIp}/cmd?COMMAND=200001&P1=2001&P2=0&P3=20001&P4=21001&P5=2&P6=None&P7=None
+http://{{ request.get_host }}/cmd?COMMAND=200001&P1=2001&P2=0&P3=20001&P4=21001&P5=2&P6=None&P7=None
 </pre><h3>SERVO_ACTION_ANGLE (ID: 200002)</h3>
 <p id='rcorners'>GET / POST</p>
 <p id='rcorners_serial'>SERIAL</p>
@@ -154,11 +154,11 @@ http://${clientIp}/cmd?COMMAND=200001&P1=2001&P2=0&P3=20001&P4=21001&P5=2&P6=Non
 </table>
 <h3>Try it out!</h3>
 <pre>
-curl -X GET --header "Accept: application/json;charset=UTF-8" "http://${clientIp}/cmd?COMMAND=200002&P1=2001&P2=0&P3=20003&P4=25&P5=None&P6=None&P7=None"
+curl -X GET --header "Accept: application/json;charset=UTF-8" "http://{{ request.get_host }}/cmd?COMMAND=200002&P1=2001&P2=0&P3=20003&P4=25&P5=None&P6=None&P7=None"
 </pre>
 <h4>Http Request</h4>
 <pre>
-http://${clientIp}/cmd?COMMAND=200002&P1=2001&P2=0&P3=20003&P4=25&P5=2&P6=None&P7=None
+http://{{ request.get_host }}/cmd?COMMAND=200002&P1=2001&P2=0&P3=20003&P4=25&P5=2&P6=None&P7=None
 </pre><h3>SERVO_STOP (ID: 200003)</h3>
 <p id='rcorners'>GET / POST</p>
 <p id='rcorners_serial'>SERIAL</p>
@@ -207,11 +207,11 @@ http://${clientIp}/cmd?COMMAND=200002&P1=2001&P2=0&P3=20003&P4=25&P5=2&P6=None&P
 </table>
 <h3>Try it out!</h3>
 <pre>
-curl -X GET --header "Accept: application/json;charset=UTF-8" "http://${clientIp}/cmd?COMMAND=200003&P1=2001&P2=0&P3=20003&P4=None&P5=None&P6=None&P7=None"
+curl -X GET --header "Accept: application/json;charset=UTF-8" "http://{{ request.get_host }}/cmd?COMMAND=200003&P1=2001&P2=0&P3=20003&P4=None&P5=None&P6=None&P7=None"
 </pre>
 <h4>Http Request</h4>
 <pre>
-http://${clientIp}/cmd?COMMAND=200003&P1=2001&P2=0&P3=20003&P4=None&P5=None&P6=None&P7=None
+http://{{ request.get_host }}/cmd?COMMAND=200003&P1=2001&P2=0&P3=20003&P4=None&P5=None&P6=None&P7=None
 </pre>
 <hr />
 <h3>Serial Json Message</h3>

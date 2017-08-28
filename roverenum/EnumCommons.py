@@ -43,6 +43,7 @@ class CommandsEnum(Enum):
     SERVO_ACTION_ANGLE                  =       "200002"
     SERVO_STOP                          =       "200003"
     OBSTACLE_READER                     =       "300001"
+    GET_SNAPSHOT                        =       "400001"
     
 class LogEnum(Enum):
     YAI_LOG_FOLDER                      =       "/logs"

@@ -141,11 +141,11 @@
 </table>
 <h3>Try it out!</h3>
 <pre>
-curl -X GET --header "Accept: application/json;charset=UTF-8" "http://${clientIp}/cmd?COMMAND=100001&P1=1001&P2=0&P3=0&P4=10003&P5=None&P6=None&P7=None"
+curl -X GET --header "Accept: application/json;charset=UTF-8" "http://{{ request.get_host }}/cmd?COMMAND=100001&P1=1001&P2=0&P3=0&P4=10003&P5=None&P6=None&P7=None"
 </pre>
 <h4>Http Request</h4>
 <pre>
-http://${clientIp}/cmd?COMMAND=100001&P1=1001&P2=0&P3=0&P4=10003&P5=None&P6=None&P7=None
+http://{{ request.get_host }}/cmd?COMMAND=100001&P1=1001&P2=0&P3=0&P4=10003&P5=None&P6=None&P7=None
 </pre>
 <h3>ROVER_STOP (ID: 100002)</h3>
 <p id='rcorners'>GET / POST</p>
@@ -195,11 +195,11 @@ http://${clientIp}/cmd?COMMAND=100001&P1=1001&P2=0&P3=0&P4=10003&P5=None&P6=None
 </table>
 <h3>Try it out!</h3>
 <pre>
-curl -X GET --header "Accept: application/json;charset=UTF-8" "http://${clientIp}/cmd?COMMAND=100002&P1=1001&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None"
+curl -X GET --header "Accept: application/json;charset=UTF-8" "http://{{ request.get_host }}/cmd?COMMAND=100002&P1=1001&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None"
 </pre>
 <h4>Http Request</h4>
 <pre>
-http://${clientIp}/cmd?COMMAND=100002&P1=1001&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None
+http://{{ request.get_host }}/cmd?COMMAND=100002&P1=1001&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None
 </pre>
 <h3>OBSTACLE_READER (ID: 300001)</h3>
 <p id='rcorners'>GET / POST</p>
@@ -249,11 +249,11 @@ http://${clientIp}/cmd?COMMAND=100002&P1=1001&P2=0&P3=None&P4=None&P5=None&P6=No
 </table>
 <h3>Try it out!</h3>
 <pre>
-curl -X GET --header "Accept: application/json;charset=UTF-8" "http://${clientIp}/cmd?COMMAND=300001&P1=3001&P2=30001&P3=None&P4=None&P5=None&P6=None&P7=None"
+curl -X GET --header "Accept: application/json;charset=UTF-8" "http://{{ request.get_host }}/cmd?COMMAND=300001&P1=3001&P2=30001&P3=None&P4=None&P5=None&P6=None&P7=None"
 </pre>
 <h4>Http Request</h4>
 <pre>
-http://${clientIp}/cmd?COMMAND=300001&P1=3001&P2=30001&P3=None&P4=None&P5=None&P6=None&P7=None
+http://{{ request.get_host }}/cmd?COMMAND=300001&P1=3001&P2=30001&P3=None&P4=None&P5=None&P6=None&P7=None
 </pre>
 <h3>ROVER_SERIAL_CMD_GET_IP (ID: 100003)</h3>
 <p id='rcorners'>GET / POST</p>
@@ -303,11 +303,11 @@ http://${clientIp}/cmd?COMMAND=300001&P1=3001&P2=30001&P3=None&P4=None&P5=None&P
 </table>
 <h3>Try it out!</h3>
 <pre>
-curl -X GET --header "Accept: application/json;charset=UTF-8" \"http://${clientIp}/cmd?COMMAND=100003&P1=false&P2=None&P3=None&P4=None&P5=None&P6=None&P7=None"
+curl -X GET --header "Accept: application/json;charset=UTF-8" \"http://{{ request.get_host }}/cmd?COMMAND=100003&P1=false&P2=None&P3=None&P4=None&P5=None&P6=None&P7=None"
 </pre>
 <h4>Http Request</h4>
 <pre>
-http://${clientIp}/cmd?COMMAND=100003&P1=false&P2=None&P3=None&P4=None&P5=None&P6=None&P7=None
+http://{{ request.get_host }}/cmd?COMMAND=100003&P1=false&P2=None&P3=None&P4=None&P5=None&P6=None&P7=None
 </pre>
 <h3>LASER_ACTION (ID: 100004)</h3>
 <p id='rcorners'>GET / POST</p>
@@ -357,11 +357,22 @@ http://${clientIp}/cmd?COMMAND=100003&P1=false&P2=None&P3=None&P4=None&P5=None&P
 </table>
 <h3>Try it out!</h3>
 <pre>
-curl -X GET --header "Accept: application/json;charset=UTF-8" "http://${clientIp}/cmd?COMMAND=100004&P1=true&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None"
+curl -X GET --header "Accept: application/json;charset=UTF-8" "http://{{ request.get_host }}/cmd?COMMAND=100004&P1=true&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None"
 </pre>
 <h4>Http Request</h4>
 <pre>
-http://${clientIp}/cmd?COMMAND=100004&P1=true&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None
+http://{{ request.get_host }}/cmd?COMMAND=100004&P1=true&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None
+</pre>
+<h3>GET_SNAPSHOT (ID: 400001)</h3>
+<p id='rcorners'>GET / POST</p>
+<p>Nos permite obtener una instantanea (im&aacute;agen).</p>
+<h3>Try it out!</h3>
+<pre>
+curl -X GET --header "Accept: image/jpeg" "http://{{ request.get_host }}/rover/video/snapshot" > snapshot.jpg
+</pre>
+<h4>Http Request</h4>
+<pre>
+http://{{ request.get_host }}/rover/video/snapshot
 </pre>
 <hr />
 <h3>Serial Json Message</h3>

@@ -11,12 +11,20 @@ from svc.CameraSvc import VideoCamera
 
 class VideoController():
     
+    def getSnapshot(self, camera):
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')     
     
-    def genFrame(self, camera):
+    def getStream(self, camera):
         while True:
             frame = camera.get_frame()
             yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')        
     
+    def snapshot(self, request):
+        log.info("Snapshot Web")
+        return StreamingHttpResponse(self.getSnapshot(VideoCamera()), content_type="multipart/x-mixed-replace; boundary=frame")
+    
     def stream(self, request):
-        return StreamingHttpResponse(self.genFrame(VideoCamera()), content_type='multipart/x-mixed-replace; boundary=frame')
+        return StreamingHttpResponse(self.getStream(VideoCamera()), content_type='multipart/x-mixed-replace; boundary=frame')

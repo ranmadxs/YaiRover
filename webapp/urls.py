@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^pipeline/cmd', commandController.pipelineCmd, name='pipelineCmd'),
     url(r'^js/pipeline.js', mainController.pipelineJs, name='pipeline.js'),
     url(r'^video/stream', videoController.stream, name='videoStream'),
+    url(r'^video/snapshot', videoController.snapshot, name='videoSnapshot'),
 ]
 
