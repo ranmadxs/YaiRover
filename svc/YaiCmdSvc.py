@@ -7,13 +7,14 @@ import time
 from lib.logger import logger as log
 from model.vo import YaiCommand, YaiResult
 from roverenum import EnumCommons, EnumCommunicator
-from svc.YaiCommunicatorSvc import I2c
+from svc.YaiCommunicatorSvc import I2c, YaiSerial
 from utils.exception import YaiRoverException
 from svc.NetworkSvc import YaiNetworkSvc
 
 class YaiCommandSvc():
     
-    yaiCommunicator = I2c()
+    i2cSvc = I2c()
+    yaiSerialSvc = YaiSerial()
     yaiNetworkSvc = YaiNetworkSvc()
     
     def buildMessage(self, yaiCommand = None):
@@ -129,12 +130,13 @@ class YaiCommandSvc():
             yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value
             yaiResult.message = yaiCommand.message
             yaiResult.type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_RESULT.value
-            raise YaiRoverException("propagateCommand SERIAL not implemented yet")
+            responseCommand = self.yaiSerialSvc.sendCommand(yaiCommand.message, yaiCommand.serialPort)
+            yaiResult.__resToObject__(responseCommand)
         
         if (yaiCommand.type == EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_I2C.value):
             log.debug("I2C >> Propagate");
             yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value
-            responseCommand = self.yaiCommunicator.sendCommand(yaiCommand.message, yaiCommand.address)
+            responseCommand = self.i2cSvc.sendCommand(yaiCommand.message, yaiCommand.address)
             yaiResult.__resToObject__(responseCommand)
                     
         return yaiResult
