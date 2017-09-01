@@ -10,7 +10,8 @@ from lib.logger import logger as log
 import cv2
 
 FOLDER_WEBCAM = '/tmp/motion/'
-CAMERA_DEVICE = '/dev/video0'
+CAMERA_DEVICE = 0
+
 PIC_WIDTH = 384
 PIC_HEIGHT = 288
 
@@ -19,7 +20,9 @@ class VideoCamera(object):
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
         # instead.
-        self.video = cv2.VideoCapture(0)
+        self.video = cv2.VideoCapture(CAMERA_DEVICE)
+        log.info("Init VideoCamera")
+        #log.info(self.video.CV_CAP_PROP_BRIGHTNESS)
         # If you decide to use video.mp4, you must have this file in the folder
         # as the main.py.
         # self.video = cv2.VideoCapture('video.mp4')
@@ -37,15 +40,15 @@ class VideoCamera(object):
 
 class FsWebCam():
     def capturarDatos(self):        
-        
+        devCamera = "/dev/video%s"%CAMERA_DEVICE
         if not os.path.exists(FOLDER_WEBCAM):
             os.makedirs(FOLDER_WEBCAM)
-        print "Usando camara %s ..." % CAMERA_DEVICE
+        print "Usando camara %s ..." % devCamera
         fileTime = strftime("%Y-%m-%d_%H:%M:%S", localtime())
         #log.info(fileTime)
         fileName = '%spic_%s.jpg'%(FOLDER_WEBCAM, fileTime)    
         #log.info(fileName)
-        commandCamera = 'fswebcam -d %s -r %dx%d %s -S2 --set brightness=65' % (CAMERA_DEVICE, PIC_WIDTH, PIC_HEIGHT, fileName)
+        commandCamera = 'fswebcam -d %s -r %dx%d %s -S2 --set brightness=65' % (devCamera, PIC_WIDTH, PIC_HEIGHT, fileName)
         log.debug(commandCamera)
         os.system(commandCamera)  
         
