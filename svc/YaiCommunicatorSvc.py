@@ -45,7 +45,7 @@ class I2c():
         respCommand = "%s%s%s%s" % (self.YAI_COMMAND_TYPE_I2C, part, total, command);
         return respCommand
 
-    def sendCommand(self, cmd, clientAddres = EnumCommunicator.I2C_CLIENT_YAI_MOTOR):        
+    def sendCommand(self, cmd, clientAddres = EnumCommunicator.I2CEnum.I2C_CLIENT_YAI_MOTOR.value):        
         bus = smbus.SMBus(self.I2C_DEV)
         log.info(" >> %s" % cmd)
         totalParts = 1;
