@@ -6,8 +6,8 @@ Created on 23-08-2017
 
 from enum import Enum
 
-I2C_CLIENT_YAI_SERVO = int(8)
-I2C_CLIENT_YAI_MOTOR = int(9)
+I2C_CLIENT_YAI_SERVO = 0x09;
+I2C_CLIENT_YAI_MOTOR = 0x08;
 
 class SerialEnum(Enum):
     SERIAL_TTYS0_PORT = '/dev/ttyS0'
