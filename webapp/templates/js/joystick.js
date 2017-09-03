@@ -19,13 +19,13 @@ function actCmd(cmd, p1, p2, p3, p4, p5, p6, p7) {
 }
 function actionMove(move, roverType) { 
     var xhttp = new XMLHttpRequest();
-	xhttp.open('GET', 'http://'+ipClient+'/cmd?TIPO_CALL='+TIPO_CALL+'&COMMAND='+ROVER_MOVE_MANUAL_BODY+'&P1='+roverType+'&P2=0&P3=0&P4='+move+'&P5=None&P6=None&P7=None', false);
+	xhttp.open('GET', 'http://'+ipClient+'/rover/cmd?TIPO_CALL='+TIPO_CALL+'&COMMAND='+ROVER_MOVE_MANUAL_BODY+'&P1='+roverType+'&P2=0&P3=0&P4='+move+'&P5=None&P6=None&P7=None', false);
     xhttp.setRequestHeader('Content-type', 'text/html');
 	xhttp.send();
 }
 function actionStop(roverType) { 
     var xhttp = new XMLHttpRequest();
-	xhttp.open('GET', 'http://'+ipClient+'/cmd?TIPO_CALL='+TIPO_CALL+'&COMMAND='+ROVER_STOP+'&P1='+roverType+'&P2=0&P3=0&P4=None&P5=None&P6=None&P7=None', false);
+	xhttp.open('GET', 'http://'+ipClient+'/rover/cmd?TIPO_CALL='+TIPO_CALL+'&COMMAND='+ROVER_STOP+'&P1='+roverType+'&P2=0&P3=0&P4=None&P5=None&P6=None&P7=None', false);
     xhttp.setRequestHeader('Content-type', 'text/html');
 	xhttp.send();
 }
@@ -36,7 +36,7 @@ function actionLaser() {
     }else{
       laserStatus = true;
     }
-    xhttp.open('GET', 'http://'+ipClient+'/cmd?TIPO_CALL='+TIPO_CALL+'&COMMAND='+LASER_ACTION+'&P1='+laserStatus+'&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None', false);
+    xhttp.open('GET', 'http://'+ipClient+'/rover/cmd?TIPO_CALL='+TIPO_CALL+'&COMMAND='+LASER_ACTION+'&P1='+laserStatus+'&P2=0&P3=None&P4=None&P5=None&P6=None&P7=None', false);
     xhttp.setRequestHeader('Content-type', 'text/html');
     xhttp.send();
 }
