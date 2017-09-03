@@ -3,7 +3,7 @@ var ipClient = "{{ request.get_host }}";
 var ROVER_STOP = "{{ ROVER_STOP }}";
 var ROVER_MOVE_MANUAL_BODY = "{{ ROVER_MOVE_MANUAL_BODY }}";
 var LASER_ACTION = "{{ LASER_ACTION }}";
-var TIPO_CALL = "SERIAL";
+var TIPO_CALL = "I2C";
 function actCmd(cmd, p1, p2, p3, p4, p5, p6, p7) { 
 	p1 = p1 || 'None'; 
 	p2 = p2 || 'None'; 
