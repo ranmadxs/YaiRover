@@ -15,7 +15,8 @@ class JoystickController():
 
     def joystick(self, request):
         log.info("joystick page")
-        return render(request, 'pages/joystick/joystick.htm')
+        context = self.yaiContext.getCommonContext()
+        return render(request, 'pages/joystick/joystick.htm', context)
 
     def roverJoystick(self, request):
         context = self.yaiContext.getCommonContext()

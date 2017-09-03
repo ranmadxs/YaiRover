@@ -21,6 +21,11 @@
     </div>
 
     <script type="text/javascript">
+		// Estos de abajo pasan por params
+    	JOYSTICK_STOP = '{{ SERVO_STOP }}';
+    	JOYSTICK_TYPE = '{{ SERVO_TYPE_SG90 }}';
+    	JOISTICK_DIRECTION = '{{ SERVO_DIRECTION_ALL }}'
+    	
         $(document).ready(function(){
             var joystickView = new JoystickView(150, function(callbackView){
                 $("#joystickContent").append(callbackView.render().el);
@@ -28,6 +33,11 @@
                     callbackView.renderSprite();
                 }, 0);
             });
+            joystickView.bind("endMove", function(y){
+                $("#xVal").html(0);
+                $("#yVal").html(0);
+                actCmd(JOYSTICK_STOP, JOYSTICK_TYPE, 0, JOISTICK_DIRECTION);         
+            });            
             joystickView.bind("verticalMove", function(y){
                 $("#yVal").html(y);
             });

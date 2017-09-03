@@ -15,7 +15,7 @@ JoystickView = Backbone.View.extend({
     events: {
         "touchstart": "startControl",
         "touchmove": "move",
-        "touchend": "endCotrol",
+        "touchend": "endControl",
         "mousedown": "startControl",
         "mouseup": "endControl",
         "mousemove": "move"
@@ -37,7 +37,8 @@ JoystickView = Backbone.View.extend({
         this.lastTouch = new Date().getTime();
         self = this;
         setTimeout(function(){
-            self._retractJoystickForInactivity();
+        	//INACTIVIDAD RETRAE
+            //self._retractJoystickForInactivity();
         }, 1000);
         this.sprite = loadSprite("/static/imgs/button.png", function(){
             self.joyStickLoaded = true;
@@ -73,7 +74,8 @@ JoystickView = Backbone.View.extend({
         this.state = INACTIVE;
         this.x = 0;
         this.y = 0;
-        this.renderSprite();
+        this.trigger("endMove", 0);
+        this.renderSprite();                
     },
     move: function(evt){
         if(this.state == INACTIVE){
