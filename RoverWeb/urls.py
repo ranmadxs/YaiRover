@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from webapp.views.home import HomeController
+
+homeController = HomeController()
 
 urlpatterns = [
     url(r'^rover/', include('webapp.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^$', homeController.index, name='index'),       
 ]

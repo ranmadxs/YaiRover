@@ -27,17 +27,7 @@ class MainController():
 
     def apiServo(self, request):
         log.info("ServoApi page")
-        return render(request, 'apiServo.htm')
-
-    def roverJoystick(self, request):
-        context = self.yaiContext.getCommonContext()
-        log.info("roverJoystick page")
-        return render(request, 'pages/joystick.htm', context)
-
-    def joystickJs(self, request):
-        context = self.yaiContext.getCommonContext()
-        log.info("roverJoystick js")
-        return render(request, 'js/joystick.js', context)        
+        return render(request, 'apiServo.htm')     
 
     def pipelineJs(self, request):
         context = self.yaiContext.getCommonContext()
