@@ -22,7 +22,8 @@ class YaiSerial():
     def sendCommand(self, strSend, port = EnumCommunicator.SerialEnum.SERIAL_TTYS1_PORT.value, baud = SERIAL_BAUD_RATE):
         log.debug(">> %s" % strSend)
         arduino = serial.Serial(port, baud)
-        arduino.write(unicode(strSend))
+        sendCmd = strSend.encode('utf-8')
+        arduino.write(sendCmd)
         time.sleep(2)
         #Esto lee todas la lineas
         msg = arduino.read(arduino.inWaiting())
