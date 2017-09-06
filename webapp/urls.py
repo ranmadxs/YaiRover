@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^js/pipeline.js', mainController.pipelineJs, name='pipeline.js'),
     url(r'^video/stream', videoController.stream, name='videoStream'),
     url(r'^video/snapshot', videoController.snapshot, name='videoSnapshot'),
-    url(r'^js/joystick.js', joystickController.joystickJs, name='joystick.js'),
+    url(r'^js/joystickCmd.js', joystickController.joystickJs, name='joystickCmd.js'),
     url(r'^joystick/roverJoystick', joystickController.roverJoystick, name='roverJoystick'),
     url(r'^joystick/joystickDevice', joystickController.joystick, name='joystickDevice'),    
 ]

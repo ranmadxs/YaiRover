@@ -5,7 +5,7 @@
         <script type='application/javascript' src='{% static "js/underscore-min.js" %}'></script>
         <script type='application/javascript' src='{% static "js/backbone-min.js" %}'></script>
         <script type='application/javascript' src='{% static "js/joystick_view.js" %}'></script>
-        <script type='application/javascript' src='http://{{ request.get_host }}/rover/js/joystick.js'></script>
+        <script type='application/javascript' src='http://{{ request.get_host }}/rover/js/joystickCmd.js'></script>
     </head>
     <body>
 
@@ -13,7 +13,7 @@
     <canvas id="joystickCanvas" width="<%= squareSize %>" height="<%= squareSize %>" style="width: <%= squareSize %>px; height: <%= squareSize %>px;">
     </canvas>
     </script>
-    <div id="joystickContent">
+    <div id="joystickContent">JOYSTICK_TYPE :: {{ joystickType }}
     </div>
     <div>
         x: <span id="xVal"></span><br/>
@@ -22,7 +22,7 @@
 
     <script type="text/javascript">
 		// Estos de abajo pasan por params
-    	JOYSTICK_SERVO_STOP = '{{ SERVO_STOP }}';
+    	JOYSTICK_OBJECT_STOP = '{{ SERVO_STOP }}';
     	JOYSTICK_SERVO_ACTION_CONTINUOUS = '{{ SERVO_ACTION_CONTINUOUS }}';
     	JOYSTICK_SERVO_TYPE = '{{ SERVO_TYPE_SG90 }}';
     	JOYSTICK_SERVO_DIRECTION_ALL = '{{ SERVO_DIRECTION_ALL }}';
@@ -31,6 +31,8 @@
     	JOYSTICK_SERVO_COUNTER_CLOCKWISE = '{{ SERVO_COUNTER_CLOCKWISE }}';
     	JOYSTICK_SERVO_CLOCKWISE = '{{ SERVO_CLOCKWISE }}';    	
     	
+    	
+    	JOYSTICK_TYPE = '{{ joystickType }}';
     	JOYSTICK_POS_POSITIVE = "POS";
     	JOYSTICK_POS_NEGATIVE = "NEG";
     	JOYSTICK_POS_ZERO = "ZER";
@@ -50,9 +52,19 @@
     	}
 
     	YaiJoystick.prototype.sendCmd = function(yaiCmd) {
+    		yaiCmd.p1 = yaiCmd.p1 || 'None'; 
+    		yaiCmd.p2 = yaiCmd.p2 || 'None'; 
+    		yaiCmd.p3 = yaiCmd.p3 || 'None'; 
+    		yaiCmd.p4 = yaiCmd.p4 || 'None'; 
+    		yaiCmd.p5 = yaiCmd.p5 || 'None'; 
+    		yaiCmd.p6 = yaiCmd.p6 || 'None'; 
+    		yaiCmd.p7 = yaiCmd.p7 || 'None';
+    		
+    		
     		if( this.state == YAI_JOYSTICK_ACTIVE ){
-        		console.log("JOYSTICK CMD: " + yaiCmd.cmd + ", p1:" + yaiCmd.p1 + ", p2:" + yaiCmd.p2 + ", p3:" + yaiCmd.p3 
+        		console.log("JOYSTICK ["+JOYSTICK_TYPE+"] CMD: " + yaiCmd.cmd + ", p1:" + yaiCmd.p1 + ", p2:" + yaiCmd.p2 + ", p3:" + yaiCmd.p3 
         				+ ", p4:" + yaiCmd.p4 + ", p5:" + yaiCmd.p5 + ", p6:" + yaiCmd.p6 + ", p7:" + yaiCmd.p7); 	
+        		actCmd(yaiCmd.cmd, yaiCmd.p1, yaiCmd.p2, yaiCmd.p3, yaiCmd.p4, yaiCmd.p5, yaiCmd.p6, yaiCmd.p7);
         		//actCmd(JOYSTICK_SERVO_STOP, JOYSTICK_SERVO_TYPE, 0, JOYSTICK_SERVO_DIRECTION_ALL);
         		//actCmd('{{ SERVO_ACTION_CONTINUOUS }}', '{{ SERVO_TYPE_SG90 }}', 0, '{{ SERVO_DIRECTION_VERTICAL }}', '{{ SERVO_COUNTER_CLOCKWISE }}', 5)
         		//actionStop('{{ ROVER_TYPE_2WD }}')
@@ -84,7 +96,7 @@
     		if (( Math.abs(this.x) < JOYSTICK_RANGO_TOLERANCIA ) && (Math.abs(this.y) < JOYSTICK_RANGO_TOLERANCIA)){
     			this.positionX = JOYSTICK_POS_ZERO;
     			this.positionY = JOYSTICK_POS_ZERO;
-    			cmds.push({"cmd" : JOYSTICK_SERVO_STOP, "p1": JOYSTICK_SERVO_TYPE, "p2": 0, "p3" : JOYSTICK_SERVO_DIRECTION_ALL});
+    			cmds.push({"cmd" : JOYSTICK_OBJECT_STOP, "p1": JOYSTICK_SERVO_TYPE, "p2": 0, "p3" : JOYSTICK_SERVO_DIRECTION_ALL});
     		}    	
     		
     		if( this.y >= JOYSTICK_RANGO_TOLERANCIA ) {
