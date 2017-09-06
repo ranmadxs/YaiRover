@@ -22,7 +22,7 @@
 
     <script type="text/javascript">
 		// Estos de abajo pasan por params
-    	JOYSTICK_OBJECT_STOP = '{{ SERVO_STOP }}';
+    	JOYSTICK_SERVO_STOP = '{{ SERVO_STOP }}';
     	JOYSTICK_SERVO_ACTION_CONTINUOUS = '{{ SERVO_ACTION_CONTINUOUS }}';
     	JOYSTICK_SERVO_TYPE = '{{ SERVO_TYPE_SG90 }}';
     	JOYSTICK_SERVO_DIRECTION_ALL = '{{ SERVO_DIRECTION_ALL }}';
@@ -31,8 +31,17 @@
     	JOYSTICK_SERVO_COUNTER_CLOCKWISE = '{{ SERVO_COUNTER_CLOCKWISE }}';
     	JOYSTICK_SERVO_CLOCKWISE = '{{ SERVO_CLOCKWISE }}';    	
     	
+    	JOYSTICK_ROVER_BODY_MOVE_TYPE_FORWARD = '{{ ROVER_BODY_MOVE_TYPE_FORWARD }}';
+    	JOYSTICK_ROVER_BODY_MOVE_TYPE_LEFT = '{{ ROVER_BODY_MOVE_TYPE_LEFT }}';
+    	JOYSTICK_ROVER_BODY_MOVE_TYPE_RIGHT = '{{ ROVER_BODY_MOVE_TYPE_RIGHT }}';
+    	JOYSTICK_ROVER_BODY_MOVE_TYPE_BACK = '{{ ROVER_BODY_MOVE_TYPE_BACK }}';
+    	JOYSTICK_ROVER_STOP = '{{ ROVER_STOP }}';
+    	JOYSTICK_ROVER_TYPE = '{{ ROVER_TYPE_2WD }}';
+    	JOYSTICK_ROVER_MOVE_MANUAL_BODY = '{{ ROVER_MOVE_MANUAL_BODY }}'
     	
     	JOYSTICK_TYPE = '{{ joystickType }}';
+    	JOYSTICK_TYPE_MOTOR = '{{ TYPE_MOTOR }}';
+    	JOYSTICK_TYPE_SERVO = '{{ TYPE_SERVO }}';
     	JOYSTICK_POS_POSITIVE = "POS";
     	JOYSTICK_POS_NEGATIVE = "NEG";
     	JOYSTICK_POS_ZERO = "ZER";
@@ -96,31 +105,64 @@
     		if (( Math.abs(this.x) < JOYSTICK_RANGO_TOLERANCIA ) && (Math.abs(this.y) < JOYSTICK_RANGO_TOLERANCIA)){
     			this.positionX = JOYSTICK_POS_ZERO;
     			this.positionY = JOYSTICK_POS_ZERO;
-    			cmds.push({"cmd" : JOYSTICK_OBJECT_STOP, "p1": JOYSTICK_SERVO_TYPE, "p2": 0, "p3" : JOYSTICK_SERVO_DIRECTION_ALL});
+    			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
+    				cmds.push({"cmd" : JOYSTICK_SERVO_STOP, "p1": JOYSTICK_SERVO_TYPE, "p2": 0, "p3" : JOYSTICK_SERVO_DIRECTION_ALL});	    				
+    			}
+    			if (JOYSTICK_TYPE_MOTOR == JOYSTICK_TYPE){
+    				cmds.push({"cmd" : JOYSTICK_ROVER_STOP, "p1": JOYSTICK_ROVER_TYPE, "p2": 0});	    				
+    			}    			
     		}    	
     		
     		if( this.y >= JOYSTICK_RANGO_TOLERANCIA ) {
     			this.positionY = JOYSTICK_POS_POSITIVE;
-    			cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
-    				"p3" : JOYSTICK_SERVO_DIRECTION_VERTICAL, "p4" : JOYSTICK_SERVO_COUNTER_CLOCKWISE, "p5" : 5});
+    			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
+    				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
+    					"p3" : JOYSTICK_SERVO_DIRECTION_VERTICAL, "p4" : JOYSTICK_SERVO_COUNTER_CLOCKWISE, "p5" : 5});
+    			}    			    			
     		}
+    		
+			if (JOYSTICK_TYPE_MOTOR == JOYSTICK_TYPE && this.y >= 0) {
+    			if ( Math.abs(this.x) < JOYSTICK_RANGO_TOLERANCIA ){
+    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
+    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_FORWARD});
+    			}
+        		if( this.x >= JOYSTICK_RANGO_TOLERANCIA ) {
+    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
+    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_RIGHT});            			
+        		}    
+        		if( this.x <= -1 * JOYSTICK_RANGO_TOLERANCIA ) {
+    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
+    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_LEFT});            			
+        		}
+			}
+    		
     		
     		if( this.y <= -1 * JOYSTICK_RANGO_TOLERANCIA ) {
     			this.positionY = JOYSTICK_POS_NEGATIVE;
-    			cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
-    				"p3" : JOYSTICK_SERVO_DIRECTION_VERTICAL, "p4" : JOYSTICK_SERVO_CLOCKWISE, "p5" : 5});
+    			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
+    				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
+    					"p3" : JOYSTICK_SERVO_DIRECTION_VERTICAL, "p4" : JOYSTICK_SERVO_CLOCKWISE, "p5" : 5});
+    			}
+    			if (JOYSTICK_TYPE_MOTOR == JOYSTICK_TYPE){
+    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
+    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_BACK});
+    			}    			
     		}    		
     		
     		if( this.x >= JOYSTICK_RANGO_TOLERANCIA ) {
     			this.positionX = JOYSTICK_POS_POSITIVE;
-    			cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
-    				"p3" : JOYSTICK_SERVO_DIRECTION_HORIZONTAL, "p4" : JOYSTICK_SERVO_COUNTER_CLOCKWISE, "p5" : 5});
+    			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
+    				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
+    					"p3" : JOYSTICK_SERVO_DIRECTION_HORIZONTAL, "p4" : JOYSTICK_SERVO_COUNTER_CLOCKWISE, "p5" : 5});
+    			}
     		}
     		
     		if( this.x <= -1 * JOYSTICK_RANGO_TOLERANCIA ) {
     			this.positionX = JOYSTICK_POS_NEGATIVE;
-    			cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
-    				"p3" : JOYSTICK_SERVO_DIRECTION_HORIZONTAL, "p4" : JOYSTICK_SERVO_CLOCKWISE, "p5" : 5});
+    			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
+    				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
+    					"p3" : JOYSTICK_SERVO_DIRECTION_HORIZONTAL, "p4" : JOYSTICK_SERVO_CLOCKWISE, "p5" : 5});
+    			}
     		}    		
     		
     		if(actualPositionX != this.positionX || actualPositionY != this.positionY){

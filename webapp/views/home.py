@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from lib.logger import logger as log
 from svc.ContextSvc import YaiContext
+from roverenum.EnumCommunicator import JoystickEnum
 
 class HomeController():
 
@@ -18,6 +19,8 @@ class HomeController():
     
     def index(self, request):
         log.info("Index page Home controller")
-        return render(request, 'pages/home/iframe.htm')
+        
+        context = self.yaiContext.getCommonContext()
+        return render(request, 'pages/home/iframe.htm', context)
 
 

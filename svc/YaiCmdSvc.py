@@ -106,6 +106,7 @@ class YaiCommandSvc():
                 or (command == EnumCommons.CommandsEnum.ROVER_MOVE_MANUAL_BODY.value)):
                 resultStr = EnumCommons.StatusEnum.STATUS_OK.value
                 propagate = True
+                tiempoStop = 0
                 if (not yaiCommand.P2 is None) and (yaiCommand.P2.isnumeric()):
                     tiempoStop = int(yaiCommand.P2)
                     time.sleep(tiempoStop)
