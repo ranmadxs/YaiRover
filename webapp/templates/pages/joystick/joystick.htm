@@ -47,6 +47,7 @@
     	JOYSTICK_POS_ZERO = "ZER";
     	JOYSTICK_DECIMALS = 2;
     	JOYSTICK_RANGO_TOLERANCIA = parseFloat(0.30);
+    	JOYSTICK_PENDIENTE = parseFloat(1.00);
     	
     	var YAI_JOYSTICK_ACTIVE = true;
     	var YAI_JOYSTICK_INACTIVE = false;
@@ -56,10 +57,53 @@
     		  this.x = 0;
     		  this.y = 0;
     		  this.state = YAI_JOYSTICK_INACTIVE;
-    		  this.positionX = null;
-    		  this.positionY = null;
+    		  this.position = null;
     	}
 
+    	YaiJoystick.prototype.getPosition = function(){
+    		if (( Math.abs(this.x) < JOYSTICK_RANGO_TOLERANCIA ) && (Math.abs(this.y) < JOYSTICK_RANGO_TOLERANCIA)){
+    			this.position = JOYSTICK_POS_ZERO;
+    			return this.position;
+    		}
+    		// Primer Cuadrante
+    		if(this.x > 0 && this.y > 0){
+    			py = JOYSTICK_PENDIENTE * this.x;
+    			if (this.y >= py){
+    				this.position = "P2";
+    			}else{
+    				this.position = "P1";
+    			}
+    		}
+    		// Segundo Cuadrante
+    		if(this.x < 0 && this.y > 0){
+    			py = -1 * JOYSTICK_PENDIENTE * this.x;
+    			if (this.y >= py){
+    				this.position = "P3";
+    			}else{
+    				this.position = "P4";
+    			}    			
+    		}
+    		// Tercer Cuadrante
+    		if(this.x < 0 && this.y < 0){
+    			py = JOYSTICK_PENDIENTE * this.x;
+    			if (this.y >= py){
+    				this.position = "P5";
+    			}else{
+    				this.position = "P6";
+    			}    			
+    		}    	
+      		// Cuarto Cuadrante
+    		if(this.x > 0 && this.y < 0){
+    			py = -1 * JOYSTICK_PENDIENTE * this.x;
+    			if (this.y >= py){
+    				this.position = "P8";
+    			}else{
+    				this.position = "P7";
+    			}    			
+    		}      		
+    		return this.position;
+    	}
+    	
     	YaiJoystick.prototype.sendCmd = function(yaiCmd) {
     		yaiCmd.p1 = yaiCmd.p1 || 'None'; 
     		yaiCmd.p2 = yaiCmd.p2 || 'None'; 
@@ -73,7 +117,9 @@
     		if( this.state == YAI_JOYSTICK_ACTIVE ){
         		console.log("JOYSTICK ["+JOYSTICK_TYPE+"] CMD: " + yaiCmd.cmd + ", p1:" + yaiCmd.p1 + ", p2:" + yaiCmd.p2 + ", p3:" + yaiCmd.p3 
         				+ ", p4:" + yaiCmd.p4 + ", p5:" + yaiCmd.p5 + ", p6:" + yaiCmd.p6 + ", p7:" + yaiCmd.p7); 	
-        		actCmd(yaiCmd.cmd, yaiCmd.p1, yaiCmd.p2, yaiCmd.p3, yaiCmd.p4, yaiCmd.p5, yaiCmd.p6, yaiCmd.p7);
+        		
+        		//actCmd(yaiCmd.cmd, yaiCmd.p1, yaiCmd.p2, yaiCmd.p3, yaiCmd.p4, yaiCmd.p5, yaiCmd.p6, yaiCmd.p7);
+        		
         		//actCmd(JOYSTICK_SERVO_STOP, JOYSTICK_SERVO_TYPE, 0, JOYSTICK_SERVO_DIRECTION_ALL);
         		//actCmd('{{ SERVO_ACTION_CONTINUOUS }}', '{{ SERVO_TYPE_SG90 }}', 0, '{{ SERVO_DIRECTION_VERTICAL }}', '{{ SERVO_COUNTER_CLOCKWISE }}', 5)
         		//actionStop('{{ ROVER_TYPE_2WD }}')
@@ -96,15 +142,13 @@
     		this.setServoDirection();
   	  	};	 
   	  	
-    	YaiJoystick.prototype.setServoDirection = function() {
-    		var actualPositionX = this.positionX;
-    		var actualPositionY = this.positionY;    		
+    	YaiJoystick.prototype.setServoDirection = function() { 		
     		this.state = YAI_JOYSTICK_INACTIVE;
     		var cmds = [];
+    		var actualPosition = this.position;
+    		this.position = this.getPosition();
     		
-    		if (( Math.abs(this.x) < JOYSTICK_RANGO_TOLERANCIA ) && (Math.abs(this.y) < JOYSTICK_RANGO_TOLERANCIA)){
-    			this.positionX = JOYSTICK_POS_ZERO;
-    			this.positionY = JOYSTICK_POS_ZERO;
+    		if (this.position == JOYSTICK_POS_ZERO){
     			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
     				cmds.push({"cmd" : JOYSTICK_SERVO_STOP, "p1": JOYSTICK_SERVO_TYPE, "p2": 0, "p3" : JOYSTICK_SERVO_DIRECTION_ALL});	    				
     			}
@@ -113,59 +157,53 @@
     			}    			
     		}    	
     		
-    		if( this.y >= JOYSTICK_RANGO_TOLERANCIA ) {
+    		if( this.position == "P1" || this.position == "P8") {
+    			this.positionY = JOYSTICK_POS_POSITIVE;
+    			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
+    				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
+    					"p3" : JOYSTICK_SERVO_DIRECTION_HORIZONTAL, "p4" : JOYSTICK_SERVO_COUNTER_CLOCKWISE, "p5" : 5});
+    			}    
+    			if (JOYSTICK_TYPE_MOTOR == JOYSTICK_TYPE ){
+    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
+    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_RIGHT});  
+    			}
+    		}
+    		
+    		if( this.position == "P2" || this.position == "P3") {
     			this.positionY = JOYSTICK_POS_POSITIVE;
     			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
     				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
     					"p3" : JOYSTICK_SERVO_DIRECTION_VERTICAL, "p4" : JOYSTICK_SERVO_COUNTER_CLOCKWISE, "p5" : 5});
-    			}    			    			
-    		}
-    		
-			if (JOYSTICK_TYPE_MOTOR == JOYSTICK_TYPE && this.y >= 0) {
-    			if ( Math.abs(this.x) < JOYSTICK_RANGO_TOLERANCIA ){
+    			}    
+    			if (JOYSTICK_TYPE_MOTOR == JOYSTICK_TYPE ){
     				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
-    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_FORWARD});
+    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_FORWARD});  
     			}
-        		if( this.x >= JOYSTICK_RANGO_TOLERANCIA ) {
-    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
-    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_RIGHT});            			
-        		}    
-        		if( this.x <= -1 * JOYSTICK_RANGO_TOLERANCIA ) {
-    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
-    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_LEFT});            			
-        		}
-			}
-    		
-    		
-    		if( this.y <= -1 * JOYSTICK_RANGO_TOLERANCIA ) {
-    			this.positionY = JOYSTICK_POS_NEGATIVE;
-    			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
-    				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
-    					"p3" : JOYSTICK_SERVO_DIRECTION_VERTICAL, "p4" : JOYSTICK_SERVO_CLOCKWISE, "p5" : 5});
-    			}
-    			if (JOYSTICK_TYPE_MOTOR == JOYSTICK_TYPE){
-    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
-    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_BACK});
-    			}    			
     		}    		
     		
-    		if( this.x >= JOYSTICK_RANGO_TOLERANCIA ) {
-    			this.positionX = JOYSTICK_POS_POSITIVE;
-    			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
-    				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
-    					"p3" : JOYSTICK_SERVO_DIRECTION_HORIZONTAL, "p4" : JOYSTICK_SERVO_COUNTER_CLOCKWISE, "p5" : 5});
-    			}
-    		}
-    		
-    		if( this.x <= -1 * JOYSTICK_RANGO_TOLERANCIA ) {
-    			this.positionX = JOYSTICK_POS_NEGATIVE;
+    		if( this.position == "P4" || this.position == "P5") {
     			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
     				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
     					"p3" : JOYSTICK_SERVO_DIRECTION_HORIZONTAL, "p4" : JOYSTICK_SERVO_CLOCKWISE, "p5" : 5});
+    			}    
+    			if (JOYSTICK_TYPE_MOTOR == JOYSTICK_TYPE ){
+    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
+    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_LEFT});  
     			}
-    		}    		
+    		} 
     		
-    		if(actualPositionX != this.positionX || actualPositionY != this.positionY){
+    		if( this.position == "P6" || this.position == "P7") {
+    			if (JOYSTICK_TYPE_SERVO == JOYSTICK_TYPE){
+    				cmds.push({"cmd" : JOYSTICK_SERVO_ACTION_CONTINUOUS, "p1": JOYSTICK_SERVO_TYPE, "p2" : 0, 
+    					"p3" : JOYSTICK_SERVO_DIRECTION_VERTICAL, "p4" : JOYSTICK_SERVO_CLOCKWISE, "p5" : 5});
+    			}    
+    			if (JOYSTICK_TYPE_MOTOR == JOYSTICK_TYPE ){
+    				cmds.push({"cmd" : JOYSTICK_ROVER_MOVE_MANUAL_BODY, "p1": JOYSTICK_ROVER_TYPE, "p2" : 0, 
+    					"p3" : 0, "p4" : 0, "p5" : JOYSTICK_ROVER_BODY_MOVE_TYPE_BACK});  
+    			}
+    		} 
+    		    		
+    		if(actualPosition != this.position){
     			this.state = YAI_JOYSTICK_ACTIVE;
     			console.log("(x=" + this.x +", y="+ this.y + ")");
         		for (index = 0; index < cmds.length; ++index) {          		  	
