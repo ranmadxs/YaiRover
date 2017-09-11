@@ -13,6 +13,7 @@ from roverenum import EnumCommons, EnumCommunicator
 from svc.YaiCommunicatorSvc import I2c, YaiSerial
 from utils.exception import YaiRoverException
 from svc.NetworkSvc import YaiNetworkSvc
+import threading
 
 class YaiCommandSvc():
     
@@ -42,6 +43,19 @@ class YaiCommandSvc():
         return yaiCommand
         
         # if (not yaiCommand is None): <- debo tirar trow en este caso
+    
+    def executeAsync(self, yaiCommand = None, asyncArg = False):
+        yaiResult = YaiResult()
+        if(asyncArg):
+            log.debug("Execute Async")
+            yaiResult.status = EnumCommons.StatusEnum.STATUS_OK.value;
+            yaiResult.type = EnumCommons.YaiCommandTypeEnum.YAI_COMMAND_TYPE_RESULT.value
+            yaiResult.content = "{\"async\": %s}" % asyncArg
+            threadCmd = threading.Thread(target=self.execute, args = {yaiCommand: yaiCommand}, name='CmdExecute')
+            threadCmd.start()
+        else:
+            yaiResult = self.execute(yaiCommand)        
+        return yaiResult
     
     def execute(self, yaiCommand = None):
         
