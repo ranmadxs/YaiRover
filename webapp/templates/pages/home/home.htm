@@ -1,0 +1,104 @@
+<!doctype html>
+{% load static %}
+<html lang="es">
+<head>
+	<meta charset="UTF-8" />
+	<script type='application/javascript' src='http://{{ request.get_host }}/rover/js/joystickCmd.js'></script>
+	<link rel="stylesheet" type="text/css" href="{% static "css/joystick.css" %}">
+</head>
+<body>
+<div id="breadcrumbs">
+	{{ request.get_full_path }}
+</div>
+<div class='contenedorTableDiv'>JS
+    <div class='contenidos'>
+        <div class='columna'>
+        	<a href='javascript:void(0);'>
+        		<div class='cross' onclick="actionLaser()"></div>
+            </a>
+        </div>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='top' onclick="actCmd('{{ SERVO_ACTION_CONTINUOUS }}', '{{ SERVO_TYPE_SG90 }}', 0, '{{ SERVO_DIRECTION_VERTICAL }}', '{{ SERVO_COUNTER_CLOCKWISE }}', 5)"></span>
+          </a>        
+        </div>
+        <div class='columna'></div>
+    </div>
+    <div class='contenidos'>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='left' onclick="actCmd('{{ SERVO_ACTION_CONTINUOUS }}', '{{ SERVO_TYPE_SG90 }}', 0, '{{ SERVO_DIRECTION_HORIZONTAL }}', '{{ SERVO_CLOCKWISE }}', 5)"></span>
+          </a>        
+        </div>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='center' onclick="actCmd('{{ SERVO_STOP }}', '{{ SERVO_TYPE_SG90 }}', 0, '{{ SERVO_DIRECTION_ALL }}')"></span>
+          </a>                
+        </div>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='right' onclick="actCmd('{{ SERVO_ACTION_CONTINUOUS }}', '{{ SERVO_TYPE_SG90 }}', 0, '{{ SERVO_DIRECTION_HORIZONTAL }}', '{{ SERVO_COUNTER_CLOCKWISE }}', 5)"></span>
+          </a>        
+        </div>
+    </div>
+    <div class='contenidos'>
+        <div class='columna'></div>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='bottom' onclick="actCmd('{{ SERVO_ACTION_CONTINUOUS }}', '{{ SERVO_TYPE_SG90 }}', 0, '{{ SERVO_DIRECTION_VERTICAL }}', '{{ SERVO_CLOCKWISE }}', 5)"></span>
+          </a>        
+        </div>
+        <div class='columna'></div>
+    </div>
+</div>
+<div class='contenedorTableDiv' style="width:340px;">CAM
+	<!--  <iframe src="http://localhost:5000/" frameborder="0" width="340" height="260"></iframe> -->
+	<!-- <img id="bg_stream" src="/rover/video/stream"> -->
+	<img id="bg_stream" src="http://localhost:5000/video_feed">
+</div>
+<div class='contenedorTableDiv'>JM
+    <div class='contenidos'>
+        <div class='columna'>
+        	<a href='javascript:void(0);'>
+        		<div class='cross' onclick="actionLaser()"></div>
+            </a>
+        </div>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='top' onclick="actionMove('{{ ROVER_BODY_MOVE_TYPE_FORWARD }}', '{{ ROVER_TYPE_2WD }}')"></span>
+          </a>        
+        </div>
+        <div class='columna'></div>
+    </div>
+    <div class='contenidos'>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='left' onclick="actionMove('{{ ROVER_BODY_MOVE_TYPE_LEFT }}', '{{ ROVER_TYPE_2WD }}')"></span>
+          </a>        
+        </div>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='center' onclick="actionStop('{{ ROVER_TYPE_2WD }}')"></span>
+          </a>                
+        </div>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='right' onclick="actionMove('{{ ROVER_BODY_MOVE_TYPE_RIGHT }}', '{{ ROVER_TYPE_2WD }}')"></span>
+          </a>        
+        </div>
+    </div>
+    <div class='contenidos'>
+        <div class='columna'></div>
+        <div class='columna'>
+          <a href='javascript:void(0);'>
+            <span class='bottom' onclick="actionMove('{{ ROVER_BODY_MOVE_TYPE_BACK }}', '{{ ROVER_TYPE_2WD }}')"></span>
+          </a>        
+        </div>
+        <div class='columna'></div>
+    </div>
+</div>
+<div>
+	<a href="/rover" >Rover API</a>
+</div>
+</body>
+</html>
