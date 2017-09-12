@@ -1,17 +1,17 @@
 .cross {
   background: #333;
-  height: 80px;
+  height: 40px;
   position: relative;
-  width: 10px;
+  width: 5px;
 }
 .cross:after {
   background: #333;
   content: '';
-  height: 10px;
-  left: -35px;
+  height: 5px;
+  left: -17.5px;
   position: absolute;
-  top: 35px;
-  width: 80px;  
+  top: 17.5px;
+  width: 40px;  
 }
 .cross:hover{
   background:#e74c3c;
@@ -19,12 +19,11 @@
 .cross:hover:after {
   background:#e74c3c;
 }
-
 .contenedorTableDiv {
     top: 10%;
     display: table;
     border: 2px solid #000;
-    width: 333px;
+    width: 200px;
     text-align: center;
     margin: 2px;
   	float: left;
@@ -41,7 +40,7 @@
 
 body {
   text-align: center;
-  margin: 6em 0 0 0;
+  margin: 2em 0 0 0;
   padding: 0;
 }
 
@@ -56,27 +55,27 @@ a {
 }
 
 a:hover .center, a:hover .left, a:hover .top, a:hover .bottom, a:hover .right{
-  border: 0.5em solid #e74c3c;
+  border: 0.25em solid #e74c3c;
 }
 
 a:hover .left:after, a:hover .top:after, a:hover .bottom:after, a:hover .right:after {
-  border-top: 0.5em solid #e74c3c;
-  border-right: 0.5em solid #e74c3c;
+  border-top: 0.25em solid #e74c3c;
+  border-right: 0.25em solid #e74c3c;
 }
 
 a:hover .center:after {
-  border-top: 0.5em solid #e74c3c;
-  border-right: 0.5em solid #e74c3c;
-  border-bottom: 0.5em solid #e74c3c;
-  border-left: 0.5em solid #e74c3c;  
+  border-top: 0.25em solid #e74c3c;
+  border-right: 0.25em solid #e74c3c;
+  border-bottom: 0.25em solid #e74c3c;
+  border-left: 0.25em solid #e74c3c;  
 }
 
 .left {
   display: inline-block;
   //background-color: blue;
-  width: 4em;
-  height: 4em;
-  border: 0.5em solid #333;
+  width: 2em;
+  height: 2em;
+  border: 0.25em solid #333;
   border-radius: 50%;
   margin-right: 1.5em;
 }
@@ -84,12 +83,12 @@ a:hover .center:after {
 .left:after {
   content: '';
 	display: inline-block;
-  margin-top: 1.05em;
-  margin-left: 0.6em;
-  width: 1.4em;
-  height: 1.4em;
-  border-top: 0.5em solid #333;
-  border-right: 0.5em solid #333;
+  margin-top: 0.5em;
+  margin-left: 0.3em;
+  width: 0.7em;
+  height: 0.7em;
+  border-top: 0.25em solid #333;
+  border-right: 0.25em solid #333;
   -moz-transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
   transform: rotate(-135deg);
@@ -97,41 +96,41 @@ a:hover .center:after {
 
 .center {
   display: inline-block;
-  width: 4em;
-  height: 4em;
-  border: 0.5em solid #333;
+  width: 2em;
+  height: 2em;
+  border: 0.25em solid #333;
   border-radius: 50%;
 }
 
 .center:after {
   content: '';
   display: inline-block;
-  margin-top: 0.7em;
-  width: 1.4em;
-  height: 1.4em;
-  border-top: 0.5em solid #333;
-  border-right: 0.5em solid #333;
-  border-bottom: 0.5em solid #333;
-  border-left: 0.5em solid #333;
+  margin-top: 0.35em;
+  width: 0.7em;
+  height: 0.7em;
+  border-top: 0.25em solid #333;
+  border-right: 0.25em solid #333;
+  border-bottom: 0.25em solid #333;
+  border-left: 0.25em solid #333;
 }
 
 .top {
   display: inline-block;
-  width: 4em;
-  height: 4em;
-  border: 0.5em solid #333;
+  width: 2em;
+  height: 2em;
+  border: 0.25em solid #333;
   border-radius: 50%;
-  margin-right: 0.75em;
+  margin-right: 0.37em;
 }
 
 .top:after {
   content: '';
 	display: inline-block;
-  margin-top: 1.4em;
-  width: 1.4em;
-  height: 1.4em;
-  border-top: 0.5em solid #333;
-  border-right: 0.5em solid #333;
+  margin-top: 0.7em;
+  width: 0.7em;
+  height: 0.7em;
+  border-top: 0.25em solid #333;
+  border-right: 0.25em solid #333;
   -moz-transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
@@ -139,21 +138,21 @@ a:hover .center:after {
 
 .bottom {
   display: inline-block;
-  width: 4em;
-  height: 4em;
-  border: 0.5em solid #333;
+  width: 2em;
+  height: 2em;
+  border: 0.25em solid #333;
   border-radius: 50%;
-  margin-left: 0.75em;
+  margin-left: 0.37em;
 }
 
 .bottom:after {
   content: '';
 	display: inline-block;
-  margin-top: 0.6em;
-  width: 1.4em;
-  height: 1.4em;
-  border-top: 0.5em solid #333;
-  border-right: 0.5em solid #333;
+  margin-top: 0.3em;
+  width: 0.7em;
+  height: 0.7em;
+  border-top: 0.25em solid #333;
+  border-right: 0.25em solid #333;
   -moz-transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
   transform: rotate(135deg);
@@ -161,22 +160,22 @@ a:hover .center:after {
 
 .right {
   display: inline-block;
-  width: 4em;
-  height: 4em;
-  border: 0.5em solid #333;
+  width: 2em;
+  height: 2em;
+  border: 0.25em solid #333;
   border-radius: 50%;
-  margin-left: 1.5em;
+  margin-left: 0.75em;
 }
 
 .right:after {
   content: '';
   display: inline-block;
-  margin-top: 1.05em;
-  margin-left: -0.6em;
-  width: 1.4em;
-  height: 1.4em;
-  border-top: 0.5em solid #333;
-  border-right: 0.5em solid #333;
+  margin-top: 0.52em;
+  margin-left: -0.3em;
+  width: 0.7em;
+  height: 0.7em;
+  border-top: 0.25em solid #333;
+  border-right: 0.25em solid #333;
   -moz-transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);

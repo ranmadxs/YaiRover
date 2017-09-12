@@ -21,6 +21,6 @@ class HomeController():
         log.info("Index page Home controller")
         
         context = self.yaiContext.getCommonContext()
-        return render(request, 'pages/home/iframe.htm', context)
+        return render(request, 'pages/home/home.htm', context)
 
 
