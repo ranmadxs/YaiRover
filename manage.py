@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+from CameraController import app
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "RoverWeb.settings")
@@ -20,4 +21,4 @@ if __name__ == "__main__":
                 "forget to activate a virtual environment?"
             )
         raise
-    execute_from_command_line(sys.argv)
+    execute_from_command_line(sys.argv)    
