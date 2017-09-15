@@ -33,12 +33,28 @@ from time import localtime, strftime
 import os
 from lib.logger import logger as log
 import cv2
+import numpy as np
+import socket
+import sys
+import pickle
 
 FOLDER_WEBCAM = '/tmp/motion/'
 CAMERA_DEVICE = 0
 
 PIC_WIDTH = 384
 PIC_HEIGHT = 288
+
+class VideoCameraClient():
+    def __init__(self):
+        self.video = cv2.VideoCapture(CAMERA_DEVICE)
+        clientsocket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        clientsocket.connect(('localhost',8089))        
+    
+    def get_frame(self):
+        success, image = self.video.read()
+        data = pickle.dumps(image)
+        ret, jpeg = cv2.imencode('.jpg', image)
+        return jpeg.tobytes()
 
 class VideoCamera(object):
     def __init__(self):
@@ -53,7 +69,7 @@ class VideoCamera(object):
         
         #log.info(self.video.CV_CAP_PROP_BRIGHTNESS)
         # If you decide to use video.mp4, you must have this file in the folder
-        # as the main.py.
+        # as the mainRover.py.
         # self.video = cv2.VideoCapture('video.mp4')
     
     def __del__(self):
