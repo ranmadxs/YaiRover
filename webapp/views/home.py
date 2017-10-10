@@ -21,6 +21,10 @@ class HomeController():
         log.info("Index page Home controller")
         
         context = self.yaiContext.getCommonContext()
+        urlBase =request.get_host()
+        
+        context["HOST_NAME"] = urlBase.split(':', 1)[0]
+        log.info(context["HOST_NAME"])
         return render(request, 'pages/home/home.htm', context)
 
 
